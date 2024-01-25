@@ -1,0 +1,43 @@
+<div id="container">
+  <form [formGroup]="paymentForm">
+    
+    <div class="lite-container-tonder">
+
+      <div id="id-name" class="empty-div">
+        <label for="name">Name: </label>
+        <input id="name" type="text" formControlName="name">
+      </div>
+
+      <div id="id-cardNumber" class="empty-div">
+        <label for="cardNumber">Card number: </label>
+        <input id="cardNumber" type="text" formControlName="cardNumber">
+      </div>
+
+      <div class="collect-row">
+        <div class="empty-div">
+          <label for="month">Month: </label>
+          <input id="month" type="text" formControlName="month">
+        </div>
+        <div class="expiration-year">
+          <label for="expirationYear">Year: </label>
+          <input id="expirationYear" type="text" formControlName="expirationYear">
+        </div>
+        <div class="empty-div">
+          <label for="cvv">CVV: </label>
+          <input id="cvv" type="text" formControlName="cvv">
+        </div>
+      </div>
+      
+      <div id="msgError"></div>
+      <button class="lite-pay-button" (click)="onPayment($event)">Pagar</button>
+      <!--
+      <div id="id-card_number"></div>
+      <div id="id-cardholder_name"></div>
+      <div id="id-expiration_month"></div>
+      <div id="id-expiration_year"></div>
+      <div id="id-cvv"></div>
+      -->
+
+    </div>
+  
+  </form>
