@@ -2,4 +2,9 @@
   <form id="payment-form">
     <div id="tonder-checkout"></div>
   </form>
+  <button *ngIf="externalButton" class="external-payment-button" (click)="onPayment($event)">Pay</button>
+  <div id="container-external-selector" class="empty-div">
+    <label for="external-selector">External button: </label>
+    <input id="external-selector" (change)="onExternalSelectorClick($event)" type="checkbox">
+  </div>
 </div>

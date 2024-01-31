@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { InlineCheckout } from "@tonder/ionic-full-sdk";
 
@@ -8,54 +8,85 @@ import { InlineCheckout } from "@tonder/ionic-full-sdk";
   styleUrls: ['./explore-container.component.scss'],
 })
 
-export class ExploreContainerComponent implements OnInit {
+export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   @Input() name?: string;
-  
-  ngOnInit() {
-    const form = document.querySelector("#payment-form");
+
+  externalButton: boolean;
+
+  inlineCheckout?: any;
+
+  customerData: any;
+
+  constructor() {
+    this.externalButton = false;
+    this.customerData = null;
+  }
+
+  onPayment(event: any) {
+    this.inlineCheckout.payment(this.customerData)
+  }
+
+  initCheckout(renderButton?: boolean) {
+    
     const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
     const totalElement = document.querySelector("#cart-total");
     const returnUrl = "http://localhost:8100/tabs/tab2"
-    const inlineCheckout = new InlineCheckout({
-      form: form,
+    this.inlineCheckout?.removeCheckout()
+    this.inlineCheckout = new InlineCheckout({
       apiKey: apiKey,
       totalElement: totalElement,
       returnUrl: returnUrl,
       successUrl: returnUrl,
-      renderPaymentButton: true
+      renderPaymentButton: !renderButton
     });
-    inlineCheckout.setPaymentData({
+    console.log("explore", this.inlineCheckout);
+    this.inlineCheckout.setPaymentData(this.customerData)
+    this.inlineCheckout.setCartTotal(250);
+    this.inlineCheckout.setCustomerEmail("john.c.calhoun@examplepetstore.com");
+    this.inlineCheckout.injectCheckout();
+  } 
+
+  onExternalSelectorClick(event: any) {
+    this.externalButton = event.target.checked;
+    this.initCheckout(event.target.checked)
+  }
+  
+  ngOnInit() {
+    this.customerData = {
       customer: {
-        firstName: "Sergio",
-        lastName: "Hernandez",
-        country: "Venezuela",
-        street: "La calle",
-        city: "La ciudad",
-        state: "El estado",
-        postCode: "8050",
-        email: "sergioh81@gmail.com",
+        firstName: "Pedro",
+        lastName: "Perez",
+        country: "Finlandia",
+        street: "The street",
+        city: "The city",
+        state: "The state",
+        postCode: "98746",
+        email: "john.c.calhoun@examplepetstore.com",
         phone: "+58 4169855522"
       },
       cart: {
         total: 250,
         items: [
           {
-            description: "Probando ando",
+            description: "Test product description",
             quantity: 1,
             price_unit: 250,
             discount: 25,
             taxes: 12,
             product_reference: 12,
-            name: "El producto de prueba",
+            name: "Test product",
             amount_total: 250
           }
         ]
       }
-    })
-    inlineCheckout.setCartTotal(250);
-    inlineCheckout.setCustomerEmail("sergioh81@gmail.com");
-    inlineCheckout.injectCheckout();
+    }
+    this.initCheckout()
   }
 
+  ngOnDestroy(): void {
+    
+    console.log("destroy explore");
+    this.inlineCheckout?.removeCheckout()
+  }
 }
