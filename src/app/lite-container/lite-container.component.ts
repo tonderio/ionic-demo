@@ -16,7 +16,7 @@ export class LiteContainerComponent {
     name: new FormControl('Pedro Paramo'),
     cardNumber: new FormControl('4242424242424242'),
     month: new FormControl('12'),
-    expirationYear: new FormControl('99'),
+    expirationYear: new FormControl('28'),
     cvv: new FormControl('123')
   });
 
@@ -53,13 +53,13 @@ export class LiteContainerComponent {
 
     const cartItems = [
       {
-        description: "Producto de prueba",
+        description: "Test product description",
         quantity: 1,
         price_unit: 25,
         discount: 1,
         taxes: 12,
-        product_reference: 12,
-        name: "El producto de prueba",
+        product_reference: 89456123,
+        name: "Test product",
         amount_total: 25
       }
     ]
@@ -123,14 +123,16 @@ export class LiteContainerComponent {
       instance_id_ship: "0",
       amount: total,
       title_ship: "shipping",
-      description: "Transacción desde el SDK Lite",
-      device_session_id: deviceSessionIdTonder ? deviceSessionIdTonder : null,
+      description: "Test checkout router description",
+      device_session_id: deviceSessionIdTonder,
       token_id: "",
       order_id: jsonResponseOrder.id,
       business_id: business.pk,
       payment_id: jsonResponsePayment.pk,
       source: 'ionic-lite-sdk',
     };
+
+    const cards = await liteCheckout.getCustomerCards({ vault_id, vault_url, skyflowIds: ["445a9c1e-254e-4dbb-846d-280237388543"] })
 
     const jsonResponseRouter = await liteCheckout.startCheckoutRouter(
       routerData
