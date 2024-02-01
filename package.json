@@ -27,11 +27,10 @@
     "@capacitor/keyboard": "5.0.7",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "@tonder/ionic-full-sdk": "file:../full-sdk",
+    "@tonder/ionic-lite-sdk": "file:../lite-sdk",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
-    "@tonder/ionic-lite-sdk": "file:../lite-sdk",
-    "@tonder/ionic-full-sdk": "file:../full-sdk",
-    "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
@@ -62,6 +61,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ts-node": "^8.3.0",
+    "tslib": "^2.6.2",
     "typescript": "~5.2.2"
   },
   "description": "Lite Ionic Lite SDK"
