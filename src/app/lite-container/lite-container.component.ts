@@ -36,7 +36,7 @@ export class LiteContainerComponent {
       apiKeyTonder: apiKey
     })
 
-    const merchantData = await liteCheckout.getBusiness();
+    const merchantData: any = await liteCheckout.getBusiness();
 
     const { openpay_keys, reference, business, vault_id, vault_url } = merchantData;
 
@@ -49,7 +49,7 @@ export class LiteContainerComponent {
       );
     }
 
-    const { auth_token } = await liteCheckout.customerRegister(customerEmail);
+    const { auth_token }: any = await liteCheckout.customerRegister(customerEmail);
 
     const cartItems = [
       {
@@ -64,7 +64,7 @@ export class LiteContainerComponent {
       }
     ]
 
-    const orderData = {
+    const orderData: any = {
       business: apiKey,
       client: auth_token,
       billing_address_id: null,
@@ -76,7 +76,7 @@ export class LiteContainerComponent {
       items: cartItems,
     };
 
-    const jsonResponseOrder = await liteCheckout.createOrder(
+    const jsonResponseOrder: any = await liteCheckout.createOrder(
       orderData
     );
 
@@ -90,7 +90,7 @@ export class LiteContainerComponent {
       order: jsonResponseOrder.id,
     };
 
-    const jsonResponsePayment = await liteCheckout.createPayment(
+    const jsonResponsePayment: any = await liteCheckout.createPayment(
       paymentData
     );
 
@@ -109,6 +109,16 @@ export class LiteContainerComponent {
     })
 
     const cardTokensSkyflowTonder = skyflowTokens;
+
+    const cards = await liteCheckout.getCustomerCards(auth_token);
+
+    const cardExist = cards.cards.records.find((record: any) => record.fields.skyflow_id === cardTokensSkyflowTonder.skyflow_id)
+
+    if(!cardExist) {
+
+      const registerCardResponse = await liteCheckout.registerCustomerCard(auth_token, { skyflow_id: cardTokensSkyflowTonder.skyflow_id });
+
+    }
 
     const routerData = {
       card: cardTokensSkyflowTonder,
@@ -132,9 +142,7 @@ export class LiteContainerComponent {
       source: 'ionic-lite-sdk',
     };
 
-    const cards = await liteCheckout.getCustomerCards({ vault_id, vault_url, skyflowIds: ["445a9c1e-254e-4dbb-846d-280237388543"] })
-
-    const jsonResponseRouter = await liteCheckout.startCheckoutRouter(
+    const jsonResponseRouter: any = await liteCheckout.startCheckoutRouter(
       routerData
     );
 
