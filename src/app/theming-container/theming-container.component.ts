@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { InlineCheckout } from '@tonder/ionic-full-sdk/dist';
+import { InlineCheckout } from '@tonder.io/ionic-full-sdk/dist';
 
 @Component({
   selector: 'app-theming-container',

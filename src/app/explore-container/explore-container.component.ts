@@ -1,9 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { InlineCheckout } from "@tonder/ionic-full-sdk";
+import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
 import { Platform } from '@ionic/angular';
-import { Card } from '@tonder/ionic-full-sdk/dist/helpers/template';
+import { Card } from '@tonder.io/ionic-full-sdk/dist/helpers/template';
 
 @Component({
   selector: 'app-explore-container',

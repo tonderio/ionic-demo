@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { LiteCheckout } from '@tonder/ionic-lite-sdk';
+import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 
 @Component({
   selector: 'app-lite-container',
