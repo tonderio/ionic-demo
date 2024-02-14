@@ -99,7 +99,8 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
         expirationMonth: "collectExpirationMonthTheming",
         expirationYear: "collectExpirationYearTheming",
         msgError: "msgErrorTheming",
-        tonderPayButton: "tonderPayButtonTheming"
+        tonderPayButton: "tonderPayButtonTheming",
+        cardsListContainer: "cardsListContainer"
       }
     });
     
