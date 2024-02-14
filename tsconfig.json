@@ -23,11 +23,7 @@
       "es2018", 
       "dom"
     ],
-    "useDefineForClassFields": false,
-    "paths": {
-      "@tonder/ionic-lite-sdk": ["E:\\@tonder\\ionic\\lite-sdk"],
-      "@tonder/ionic-full-sdk": ["E:\\@tonder\\ionic\\full-sdk"]
-    }
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

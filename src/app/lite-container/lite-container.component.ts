@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { LiteCheckout } from '@tonder/ionic-lite-sdk';
+import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 
 @Component({
   selector: 'app-lite-container',
@@ -112,12 +112,16 @@ export class LiteContainerComponent {
 
     const cards = await liteCheckout.getCustomerCards(auth_token);
 
-    const cardExist = cards.cards.records.find((record: any) => record.fields.skyflow_id === cardTokensSkyflowTonder.skyflow_id)
+    if("cards" in cards) {
 
-    if(!cardExist) {
+      const cardExist = cards.cards.records.find((record: any) => record.fields.skyflow_id === cardTokensSkyflowTonder.skyflow_id)
 
-      const registerCardResponse = await liteCheckout.registerCustomerCard(auth_token, { skyflow_id: cardTokensSkyflowTonder.skyflow_id });
+      if(!cardExist) {
 
+        const registerCardResponse = await liteCheckout.registerCustomerCard(auth_token, { skyflow_id: cardTokensSkyflowTonder.skyflow_id });
+
+      }
+      
     }
 
     const routerData = {
@@ -146,12 +150,12 @@ export class LiteContainerComponent {
       routerData
     );
 
-    if (jsonResponseRouter) {
+    /*if (jsonResponseRouter) {
       const url = jsonResponseRouter?.next_action?.redirect_to_url?.url
       window.location = url;
     } else {
       console.log("Error al procesar el pago");
-    }
+    }*/
   }
 
 }

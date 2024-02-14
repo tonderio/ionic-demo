@@ -1,6 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { InlineCheckout } from "@tonder/ionic-full-sdk";
+import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
+
+import { Platform } from '@ionic/angular';
+import { Card } from '@tonder.io/ionic-full-sdk/dist/helpers/template';
 
 @Component({
   selector: 'app-explore-container',
@@ -18,7 +21,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   customerData: any;
 
-  constructor() {
+  constructor(public platform: Platform) {
     this.externalButton = false;
     this.customerData = null;
   }
@@ -34,6 +37,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     const returnUrl = "http://localhost:8100/tabs/tab2"
     this.inlineCheckout?.removeCheckout()
     this.inlineCheckout = new InlineCheckout({
+      platforms: this.platform.platforms(),
       apiKey: apiKey,
       totalElement: totalElement,
       returnUrl: returnUrl,
@@ -45,7 +49,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     this.inlineCheckout.setCartTotal(250);
     this.inlineCheckout.setCustomerEmail("john.c.calhoun@examplepetstore.com");
     this.inlineCheckout.injectCheckout();
-  } 
+  }
 
   onExternalSelectorClick(event: any) {
     this.externalButton = event.target.checked;
@@ -85,8 +89,6 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    
-    console.log("destroy explore");
     this.inlineCheckout?.removeCheckout()
   }
 }
