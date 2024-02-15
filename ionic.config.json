@@ -1,0 +1,7 @@
+{
+  "name": "tonder-integration",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
