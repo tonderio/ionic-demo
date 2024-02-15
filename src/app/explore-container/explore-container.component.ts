@@ -44,10 +44,9 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
       successUrl: returnUrl,
       renderPaymentButton: !renderButton
     });
-    console.log("explore", this.inlineCheckout);
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(250);
-    this.inlineCheckout.setCustomerEmail("john.c.calhoun@examplepetstore.com");
+    this.inlineCheckout.setCustomerEmail("sergioh81@gmail.com");
     this.inlineCheckout.injectCheckout();
   }
 
@@ -66,7 +65,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         city: "The city",
         state: "The state",
         postCode: "98746",
-        email: "john.c.calhoun@examplepetstore.com",
+        email: "sergioh81@gmail.com",
         phone: "+58 4169855522"
       },
       cart: {

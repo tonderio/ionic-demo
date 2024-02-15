@@ -27,7 +27,7 @@
     "@capacitor/keyboard": "5.0.7",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
-    "@tonder.io/ionic-full-sdk": "^0.0.1",
+    "@tonder.io/ionic-full-sdk": "^0.0.2",
     "@tonder.io/ionic-lite-sdk": "^0.0.11",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",

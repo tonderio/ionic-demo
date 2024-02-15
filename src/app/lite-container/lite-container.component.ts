@@ -110,20 +110,6 @@ export class LiteContainerComponent {
 
     const cardTokensSkyflowTonder = skyflowTokens;
 
-    const cards = await liteCheckout.getCustomerCards(auth_token);
-
-    if("cards" in cards) {
-
-      const cardExist = cards.cards.records.find((record: any) => record.fields.skyflow_id === cardTokensSkyflowTonder.skyflow_id)
-
-      if(!cardExist) {
-
-        const registerCardResponse = await liteCheckout.registerCustomerCard(auth_token, { skyflow_id: cardTokensSkyflowTonder.skyflow_id });
-
-      }
-      
-    }
-
     const routerData = {
       card: cardTokensSkyflowTonder,
       name: cardTokensSkyflowTonder.cardholder_name,
@@ -150,12 +136,12 @@ export class LiteContainerComponent {
       routerData
     );
 
-    /*if (jsonResponseRouter) {
+    if (jsonResponseRouter) {
       const url = jsonResponseRouter?.next_action?.redirect_to_url?.url
       window.location = url;
     } else {
       console.log("Error al procesar el pago");
-    }*/
+    }
   }
 
 }
