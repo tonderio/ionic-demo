@@ -46,7 +46,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     });
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(250);
-    this.inlineCheckout.setCustomerEmail("sergioh81@gmail.com");
+    this.inlineCheckout.setCustomerEmail("sergio@grupoapok.com");
     this.inlineCheckout.injectCheckout();
   }
 
@@ -65,7 +65,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         city: "The city",
         state: "The state",
         postCode: "98746",
-        email: "sergioh81@gmail.com",
+        email: "sergio@grupoapok.com",
         phone: "+58 4169855522"
       },
       cart: {
