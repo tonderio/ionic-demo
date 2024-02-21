@@ -25,7 +25,6 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
 
   initCheckout() {
     const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
-    const totalElement = document.querySelector("#cart-total");
     const returnUrl = "http://localhost:8100/tabs/tab2"
     this.inlineCheckout?.removeCheckout()
 
@@ -91,9 +90,7 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
     }
 
     this.inlineCheckout = new InlineCheckout({
-      platforms: this.platform.platforms(),
       apiKey: apiKey,
-      totalElement: totalElement,
       returnUrl: returnUrl,
       successUrl: returnUrl,
       renderPaymentButton: true,
@@ -109,6 +106,11 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
         tonderPayButton: "tonderPayButtonTheming",
         cardsListContainer: "cardsListContainer",
         msgNotification: "msgNotificationTheming"
+      },
+      callBack: (response) => {
+        if(response?.next_action?.redirect_to_url?.url) {
+          window.location = response.next_action.redirect_to_url.url
+        }
       }
     });
     
