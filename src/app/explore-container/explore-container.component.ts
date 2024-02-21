@@ -40,7 +40,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
       apiKey: apiKey,
       returnUrl: returnUrl,
       successUrl: returnUrl,
-      renderPaymentButton: true
+      renderPaymentButton: !renderButton
     });
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(250);
