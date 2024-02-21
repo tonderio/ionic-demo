@@ -1,7 +1,7 @@
 #tonder-checkout-theming {
   .container-tonder {
 
-    background-color: white;
+    background-color: #afc2b0;
     margin: 0 auto;
     padding: 30px 10px 30px 10px;
     overflow: hidden;
@@ -85,7 +85,6 @@
       }
     }
     
-    
     @media screen and (max-width: 600px) {
       .payment_method_zplit {
         font-size: 16px;
@@ -96,7 +95,95 @@
         display: none;
       }
     }
+
   }
+
+  .cards-list-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px 0px 10px;
+    gap: 33% 20px;
+  }
+
+  .checkbox label {
+    margin-left: 10px;
+    font-size: '12px';
+    font-weight: '500';
+    color: #1D1D1D;
+    font-family: "Inter", sans-serif !important;
+  }
+
+  .checkbox {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .pay-new-card {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #1D1D1D;
+    gap: 33% 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 90%;
+  }
+
+  .pay-new-card .card-number {
+    font-size: 16px;
+    font-family: "Inter", sans-serif !important;
+  }
+
+  .card-image {
+    width: 27px;
+    height: 20px;
+    text-align: left;
+  }
+
+  .card-item-label {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #1D1D1D;
+    gap: 33% 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 90%;
+  }
+
+  .card_selected {
+    width: 10%;
+  }
+
+  .card-item {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 33% 20px;
+  }
+
+  .card-item .card-number {
+    font-size: 16px;
+    font-family: "Inter", sans-serif !important;
+  }
+
+  .card-item .card-expiration {
+    font-size: 16px;
+    font-family: "Inter", sans-serif !important;
+  }
+
+  .card-image {
+    width: 27px;
+    height: 20px;
+    text-align: left;
+  }
+
 }
   
   
