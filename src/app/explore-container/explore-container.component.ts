@@ -44,7 +44,8 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         if(response?.next_action?.redirect_to_url?.url) {
           window.location = response.next_action.redirect_to_url.url
         }
-      }
+      },
+      isOpenPaySandbox: true
     });
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(this.customerData.cart.total);
