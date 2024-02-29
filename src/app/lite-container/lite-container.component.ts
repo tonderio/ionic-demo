@@ -45,7 +45,8 @@ export class LiteContainerComponent {
     if (openpay_keys.merchant_id && openpay_keys.public_key) {
       deviceSessionIdTonder = await liteCheckout.getOpenpayDeviceSessionID(
         openpay_keys.merchant_id,
-        openpay_keys.public_key
+        openpay_keys.public_key,
+        true
       );
     }
 
