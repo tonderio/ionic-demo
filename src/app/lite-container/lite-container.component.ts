@@ -50,7 +50,7 @@ export class LiteContainerComponent {
       );
     }
 
-    const { auth_token }: any = await liteCheckout.customerRegister(customerEmail);
+    const { auth_token, id: customerId }: any = await liteCheckout.customerRegister(customerEmail);
 
     const cartItems = [
       {
@@ -88,7 +88,8 @@ export class LiteContainerComponent {
       business_pk: business.pk,
       amount: total,
       date: dateString,
-      order: jsonResponseOrder.id,
+      order_id: jsonResponseOrder.id,
+      client_id: customerId,
     };
 
     const jsonResponsePayment: any = await liteCheckout.createPayment(

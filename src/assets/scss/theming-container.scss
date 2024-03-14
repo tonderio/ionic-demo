@@ -192,10 +192,6 @@
     width: 90%;
   }
 
-  .card_selected {
-    width: 10%;
-  }
-
   .card-item {
     display: flex;
     justify-content: start;
@@ -211,6 +207,86 @@
   .card-item .card-expiration {
     font-size: 16px;
     font-family: "Inter", sans-serif !important;
+  }
+
+  .card_selected {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    cursor: pointer;
+    border-radius: 100%;
+    border: 1px #3bc635 solid;
+    color: #3bc635;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .card_selected:before {
+    width: 8px;
+    height: 8px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .card_selected:checked {
+    border: 1px #3bc635 solid;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    cursor: pointer;
+    border-radius: 100%;
+    color: #3bc635;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .card_selected:checked:before {
+    content: "";
+    border: 1px #3bc635 solid;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    opacity: 50;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .card_selected:hover:before {
+    width: 8px;
+    height: 8px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    opacity: 10;
   }
 
 }
