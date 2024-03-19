@@ -132,6 +132,8 @@ export class LiteContainerComponent {
       business_id: business.pk,
       payment_id: jsonResponsePayment.pk,
       source: 'ionic-lite-sdk',
+      currency: "MXN",
+      metadata: null
     };
 
     const jsonResponseRouter: any = await liteCheckout.startCheckoutRouter(

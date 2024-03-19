@@ -85,7 +85,8 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
             amount_total: 2500
           }
         ]
-      }
+      },
+      currency: "MXN"
     }
     this.initCheckout()
   }
