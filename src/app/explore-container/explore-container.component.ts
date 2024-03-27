@@ -41,9 +41,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
       successUrl: returnUrl,
       renderPaymentButton: !renderButton,
       callBack: (response) => {
-        if(response?.next_action?.redirect_to_url?.url) {
-          window.location = response.next_action.redirect_to_url.url
-        }
+        window.location.href = returnUrl;
       },
       isOpenPaySandbox: true
     });
