@@ -66,7 +66,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         city: "The city",
         state: "The state",
         postCode: "98746",
-        email: "sergio.hernandez-ext@dominion-global.com",
+        email: "sergio@grupoapok.com",
         phone: "+58 4169855522"
       },
       cart: {
