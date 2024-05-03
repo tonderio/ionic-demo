@@ -28,6 +28,8 @@ export class LiteContainerComponent {
       const returnUrl = "http://localhost:8100/tabs/tab2";
       const customerEmail = "john.c.calhoun@examplepetstore.com";
       const customerPhone = "+584169850705";
+      const customerName = "Jhon";
+      const customerLastName = "Calhoun";
       const baseUrl = "https://stage.tonder.io";
       const abortController = new AbortController();
       const total = 25;
@@ -116,8 +118,8 @@ export class LiteContainerComponent {
 
       const routerData = {
         card: cardTokensSkyflowTonder,
-        name: cardTokensSkyflowTonder.cardholder_name,
-        last_name: "",
+        name: customerName,
+        last_name: customerLastName,
         email_client: customerEmail,
         phone_number: customerPhone,
         return_url: returnUrl,
