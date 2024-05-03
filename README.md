@@ -119,6 +119,28 @@ this.inlineCheckout = new InlineCheckout({
     transition: max-height 0.5s ease-out;
     max-width: 600px;
     border: solid 1px #e3e3e3;
+
+    .error-custom-inputs-tonder {
+      background-color: white;
+      position: absolute;
+      left: 0px;
+      bottom: -1px;
+      width: 100%;
+      font-size: 12px;
+      color: red;
+      font-family: "Inter", sans-serif;
+    }
+
+    .expiration-year .error-custom-inputs-tonder {
+      background-color: white;
+      position: absolute;
+      left: 0px;
+      bottom: 3px;
+      width: 100%;
+      font-size: 12px;
+      color: red;
+      font-family: "Inter", sans-serif;
+    }
     
     .collect-row {
       display: flex;
@@ -137,10 +159,12 @@ this.inlineCheckout = new InlineCheckout({
     }
     
     .expiration-year {
+      position: relative;
       padding-top: 25px;
     }
     
     .empty-div {
+      position: relative;
       height: 80px;
       margin-top: 2px;
       margin-bottom: 4px;
@@ -300,10 +324,6 @@ this.inlineCheckout = new InlineCheckout({
     width: 90%;
   }
 
-  .card_selected {
-    width: 10%;
-  }
-
   .card-item {
     display: flex;
     justify-content: start;
@@ -319,6 +339,86 @@ this.inlineCheckout = new InlineCheckout({
   .card-item .card-expiration {
     font-size: 16px;
     font-family: "Inter", sans-serif !important;
+  }
+
+  .card_selected {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    cursor: pointer;
+    border-radius: 100%;
+    border: 1px #3bc635 solid;
+    color: #3bc635;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .card_selected:before {
+    width: 8px;
+    height: 8px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .card_selected:checked {
+    border: 1px #3bc635 solid;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    cursor: pointer;
+    border-radius: 100%;
+    color: #3bc635;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .card_selected:checked:before {
+    content: "";
+    border: 1px #3bc635 solid;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    opacity: 50;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .card_selected:hover:before {
+    width: 8px;
+    height: 8px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    opacity: 10;
   }
 
 }
