@@ -78,7 +78,7 @@ export class EnrollmentLiteContainerComponent {
         await liteCheckout.registerCustomerCard(auth_token, { skyflow_id: skyflowTokens.skyflow_id });
       }
  
-      this.messageService.setMessage('Tarjeta guardada existosamente.');
+      this.messageService.setMessage('Tarjeta guardada exitosamente.');
         this.router.navigate(['/tabs/tab2']);
 
     } catch (error: any) {

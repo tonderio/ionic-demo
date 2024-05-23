@@ -59,7 +59,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
         tonderSaveCardButton: "tonderSaveCardButtonEnrollment"
       },
       callBack: (response) => {
-        this.messageService.setMessage('Tarjeta guardada existosamente.');
+        this.messageService.setMessage('Tarjeta guardada exitosamente.');
         this.router.navigate(['/tabs/tab2']);
         this.inlineCheckout?.removeCheckout()
       },
