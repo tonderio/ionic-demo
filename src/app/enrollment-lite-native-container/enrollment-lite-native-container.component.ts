@@ -46,8 +46,8 @@ export class EnrollmentLiteNativeContainerComponent {
   paymentMethodForm = new FormGroup({
     name: new FormControl('', Validators.required),
     cardNumber: new FormControl('', Validators.required),
-    expirationDate: new FormControl('01/28', Validators.required),
-    cvv: new FormControl('000', Validators.required)
+    expirationDate: new FormControl('', Validators.required),
+    cvv: new FormControl('', Validators.required)
   });
 
   constructor(private messageService: MessageService, private router: Router, private alertController: AlertController, private translate: TranslateService) {
