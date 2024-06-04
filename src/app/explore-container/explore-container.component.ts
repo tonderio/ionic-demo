@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
 import { Platform } from '@ionic/angular';
-import { Card } from '@tonder.io/ionic-full-sdk/dist/helpers/template';
+import { PaymentData } from '@tonder.io/ionic-full-sdk/dist/types/commons';
 
 @Component({
   selector: 'app-explore-container',
@@ -19,7 +19,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   inlineCheckout?: any;
 
-  customerData: any;
+  customerData: PaymentData | null;
 
   constructor(public platform: Platform) {
     this.externalButton = false;
@@ -46,8 +46,8 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
       isOpenPaySandbox: true
     });
     this.inlineCheckout.setPaymentData(this.customerData)
-    this.inlineCheckout.setCartTotal(this.customerData.cart.total);
-    this.inlineCheckout.setCustomerEmail(this.customerData.customer.email);
+    this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
+    this.inlineCheckout.setCustomerEmail(this.customerData?.customer.email);
     this.inlineCheckout.injectCheckout();
   }
 
