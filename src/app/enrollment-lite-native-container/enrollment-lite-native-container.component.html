@@ -1,0 +1,54 @@
+<!-- 
+  Implement your main header
+  <app-main-header [backhref]="parentUrl" [title]="'PAYMENT_METHODS.ADD_HEADER_TITLE' | translate"></app-main-header> -->
+
+  <!-- import tailwind only for this demo, for this screen -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+
+<ion-content [fullscreen]="true">
+  <div class="grid grid-cols-12">
+    <div class="col-span-12 my-4 relative">
+      <ion-img class="h-[192px] w-[420px] z-0" src="assets/cards/generic_credit_card.png"></ion-img>
+      <ion-img *ngIf="creditCardBrandIcon" class="absolute z-10 w-[64px] h-[48px] bottom-1 right-16" [src]="creditCardBrandIcon"></ion-img>
+    </div>
+
+    <div class="col-span-12">
+      <form [formGroup]="paymentMethodForm" autocomplete="off">
+        <div class="grid grid-cols-12">
+          <div class="col-span-12">
+            <ion-item>
+              <ion-input label="{{'PAYMENT_METHODS.CARD_NUMBER' | translate}}" labelPlacement="stacked" placeholder="{{'PAYMENT_METHODS.CARD_NUMBER_PLACEHOLDER' | translate}}" formControlName="cardNumber" [maskito]="cardMask" [maskitoElement]="maskitoPredicate" minlength="12" maxlength="19" (ngModelChange)="onCardNumberChange($event);"></ion-input>
+              <ion-icon slot="end" name="camera" color="medium"></ion-icon>
+            </ion-item>
+          </div>
+          <div class="col-span-6">
+            <ion-item>
+              <ion-input label="{{'PAYMENT_METHODS.EXPIRATION_DATE' | translate}}" labelPlacement="stacked" placeholder="{{'PAYMENT_METHODS.EXPIRATION_DATE_PLACEHOLDER' | translate}}" formControlName="expirationDate" [maskito]="expirationMask" [maskitoElement]="maskitoPredicate" minlength="5" maxlength="5"></ion-input>
+            </ion-item>
+          </div>
+          <div class="col-span-6">
+            <ion-item>
+              <ion-input type="password" label="{{'PAYMENT_METHODS.CVV' | translate}}" labelPlacement="stacked" placeholder="{{'PAYMENT_METHODS.CVV_PLACEHOLDER' | translate}}" formControlName="cvv" [maskito]="cvvMask" [maskitoElement]="maskitoPredicate" minlength="3" maxlength="4"></ion-input>
+            </ion-item>
+          </div>
+          <div class="col-span-12">
+            <ion-item>
+              <ion-input label="{{'PAYMENT_METHODS.CARD_OWNER_NAME' | translate}}" labelPlacement="stacked" placeholder="{{'PAYMENT_METHODS.CARD_OWNER_NAME_PLACEHOLDER' | translate}}" formControlName="name"></ion-input>
+            </ion-item>
+          </div>
+          <!-- Not available at the moment
+            <div class="col-span-12">
+            <ion-item>
+              <ion-input label="{{'PAYMENT_METHODS.CARD_ALIAS' | translate}}" labelPlacement="stacked" placeholder="{{'PAYMENT_METHODS.CARD_ALIAS_PLACEHOLDER' | translate}}" formControlName="alias"></ion-input>
+            </ion-item>
+          </div> -->
+        </div>
+        <!-- <pre>{{paymentMethodForm?.value | json}}</pre> -->
+      </form>
+    </div>
+
+    <div class="col-span-12 bottom-6 fixed w-full">
+      <ion-button appTheme color="primary" expand="block" (click)="onSave();">{{'GENERIC.SAVE' | translate}}</ion-button>
+    </div>
+  </div>
+</ion-content>

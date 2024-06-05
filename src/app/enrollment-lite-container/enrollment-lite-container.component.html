@@ -1,0 +1,39 @@
+<div id="container">
+  
+  <form [formGroup]="paymentForm">
+    
+    <div class="lite-container-tonder">
+
+      <div id="id-name" class="empty-div">
+        <label for="name">Name: </label>
+        <input id="name" type="text" formControlName="name">
+      </div>
+
+      <div id="id-cardNumber" class="empty-div">
+        <label for="cardNumber">Card number: </label>
+        <input id="cardNumber" type="text" formControlName="cardNumber">
+      </div>
+
+      <div class="collect-row">
+        <div class="empty-div">
+          <label for="month">Month: </label>
+          <input id="month" type="text" formControlName="month">
+        </div>
+        <div class="expiration-year">
+          <label for="expirationYear">Year: </label>
+          <input id="expirationYear" type="text" formControlName="expirationYear">
+        </div>
+        <div class="empty-div">
+          <label for="cvv">CVV: </label>
+          <input id="cvv" type="text" formControlName="cvv">
+        </div>
+      </div>
+      
+      <div id="msgError">{{ errorMessage }}</div>
+      <div id="msgNotification"></div>
+      
+      <button class="lite-pay-button" (click)="onSave($event)">Guardar</button>
+
+    </div>
+  
+  </form>
