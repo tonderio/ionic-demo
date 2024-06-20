@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MessageService } from '../enrollment-container/message.service'; 
 
 @Component({
   selector: 'app-tab2',
@@ -6,7 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+  public message: string = '';
+  constructor(private messageService: MessageService) {}
 
-  constructor() {}
+  ngOnInit() {
+    this.message = this.messageService.getMessage();
+  }
 
 }

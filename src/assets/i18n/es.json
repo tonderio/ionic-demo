@@ -1,0 +1,19 @@
+{
+    "PAYMENT_METHODS": {
+      "ADD_HEADER_TITLE": "Agregar método de pago",
+      "CARD_NUMBER": "Número de tarjeta",
+      "CARD_NUMBER_PLACEHOLDER": "Escribe o escanea tu tarjeta",
+      "EXPIRATION_DATE": "Fecha de expiración",
+      "EXPIRATION_DATE_PLACEHOLDER": "MM/YY",
+      "CVV": "CVV",
+      "CVV_PLACEHOLDER": "CVV",
+      "CARD_OWNER_NAME": "Nombre en la tarjeta",
+      "CARD_OWNER_NAME_PLACEHOLDER": "Nombre tal y como aparece en la tarjeta",
+      "CARD_ALIAS": "Alias",
+      "CARD_ALIAS_PLACEHOLDER": "Apodo para tu tarjeta"
+    },
+    "GENERIC": {
+      "SAVE": "Guardar"
+    }
+  }
+  
