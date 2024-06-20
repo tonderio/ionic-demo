@@ -12,7 +12,11 @@ export class LiteContainerComponent {
 
   @Input() name?: string;
   @Input() errorMessage?: string;
-
+  liteCheckout?: any;
+  abortController = new AbortController();
+  apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+  baseUrl = "https://stage.tonder.io";
+  returnUrl = "http://localhost:8100/tabs/tab3";
   paymentForm = new FormGroup({
     name: new FormControl('Pedro Paramo'),
     cardNumber: new FormControl('4242424242424242'),
@@ -24,37 +28,27 @@ export class LiteContainerComponent {
   async onPayment(event: Event): Promise<any> {
     
     try {
-      const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
-      const returnUrl = "http://localhost:8100/tabs/tab2";
       const customerEmail = "john.c.calhoun@examplepetstore.com";
       const customerPhone = "+584169850705";
       const customerName = "Jhon";
       const customerLastName = "Calhoun";
-      const baseUrl = "https://stage.tonder.io";
-      const abortController = new AbortController();
       const total = 25;
 
-      const liteCheckout = new LiteCheckout({
-        baseUrlTonder: baseUrl,
-        signal: abortController.signal,
-        apiKeyTonder: apiKey
-      })
-
-      const merchantData: any = await liteCheckout.getBusiness();
+      const merchantData: any = await this.liteCheckout.getBusiness();
 
       const { openpay_keys, reference, business, vault_id, vault_url } = merchantData;
 
       let deviceSessionIdTonder;
       
       if (openpay_keys.merchant_id && openpay_keys.public_key) {
-        deviceSessionIdTonder = await liteCheckout.getOpenpayDeviceSessionID(
+        deviceSessionIdTonder = await this.liteCheckout.getOpenpayDeviceSessionID(
           openpay_keys.merchant_id,
           openpay_keys.public_key,
           true
         );
       }
 
-      const { auth_token, id: customerId }: any = await liteCheckout.customerRegister(customerEmail);
+      const { auth_token, id: customerId }: any = await this.liteCheckout.customerRegister(customerEmail);
 
       const cartItems = [
         {
@@ -70,7 +64,7 @@ export class LiteContainerComponent {
       ]
 
       const orderData: any = {
-        business: apiKey,
+        business: this.apiKey,
         client: auth_token,
         billing_address_id: null,
         shipping_address_id: null,
@@ -81,7 +75,7 @@ export class LiteContainerComponent {
         items: cartItems,
       };
 
-      const jsonResponseOrder: any = await liteCheckout.createOrder(
+      const jsonResponseOrder: any = await this.liteCheckout.createOrder(
         orderData
       );
 
@@ -96,7 +90,7 @@ export class LiteContainerComponent {
         client_id: customerId,
       };
 
-      const jsonResponsePayment: any = await liteCheckout.createPayment(
+      const jsonResponsePayment: any = await this.liteCheckout.createPayment(
         paymentData
       );
 
@@ -108,7 +102,7 @@ export class LiteContainerComponent {
         cardholder_name: this.paymentForm.value.name
       }
 
-      const skyflowTokens = await liteCheckout.getSkyflowTokens({
+      const skyflowTokens = await this.liteCheckout.getSkyflowTokens({
         vault_id: vault_id,
         vault_url: vault_url,
         data: skyflowFields
@@ -122,7 +116,7 @@ export class LiteContainerComponent {
         last_name: customerLastName,
         email_client: customerEmail,
         phone_number: customerPhone,
-        return_url: returnUrl,
+        return_url: this.returnUrl,
         id_product: "no_id",
         quantity_product: 1,
         id_ship: "0",
@@ -140,11 +134,12 @@ export class LiteContainerComponent {
         metadata: null
       };
 
-      const jsonResponseRouter: any = await liteCheckout.startCheckoutRouter(
+      const jsonResponseRouter: any = await this.liteCheckout.startCheckoutRouter(
         routerData
       );
 
       if (jsonResponseRouter) {
+        console.log("router response: ", jsonResponseRouter)
         const url = jsonResponseRouter?.next_action?.redirect_to_url?.url
         window.location = url;
       } else {
@@ -159,6 +154,20 @@ export class LiteContainerComponent {
       }, 5000)
     }
   
+  }
+  
+  ngOnInit() {
+    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+    const baseUrl = "https://stage.tonder.io";
+    this.liteCheckout = new LiteCheckout({
+      baseUrlTonder: baseUrl,
+      signal: this.abortController.signal,
+      apiKeyTonder: apiKey
+    })
+    this.liteCheckout.verify3dsTransaction().then((response: any) => {
+      console.log('Verify 3ds response', response)
+    })
+
   }
 
 }

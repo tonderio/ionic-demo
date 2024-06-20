@@ -12,7 +12,11 @@ export class FullCheckoutContainerComponent {
 
   @Input() name?: string;
   @Input() errorMessage?: string;
-
+  liteCheckout?: any;
+  abortController = new AbortController();
+  apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+  baseUrl = "https://stage.tonder.io";
+  returnUrl = "http://localhost:8100/tabs/tab5";
   paymentForm = new FormGroup({
     name: new FormControl('Pedro Paramo'),
     cardNumber: new FormControl('4242424242424242'),
@@ -24,11 +28,6 @@ export class FullCheckoutContainerComponent {
   async onPayment(event: Event): Promise<any> {
     
     try {
-      const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
-      const returnUrl = "http://localhost:8100/tabs/tab2";
-      const baseUrl = "https://stage.tonder.io";
-      const abortController = new AbortController();
-
       let checkoutData = {
         customer: {
           name: "Jhon",
@@ -50,10 +49,10 @@ export class FullCheckoutContainerComponent {
             }
           ]
         },
-        return_url: returnUrl,
+        return_url: this.returnUrl,
         total: 25,
         isSandbox: true,
-        metadata: {},
+        metadata: null,
         currency: "MXN",
         skyflowTokens: {
           cardholder_name: "",
@@ -66,9 +65,9 @@ export class FullCheckoutContainerComponent {
       }
 
       const liteCheckout = new LiteCheckout({
-        baseUrlTonder: baseUrl,
-        signal: abortController.signal,
-        apiKeyTonder: apiKey
+        baseUrlTonder: this.baseUrl,
+        signal: this.abortController.signal,
+        apiKeyTonder: this.apiKey
       })
 
       const merchantData: any = await liteCheckout.getBusiness();
@@ -96,7 +95,8 @@ export class FullCheckoutContainerComponent {
       );
 
       if (jsonResponseRouter) {
-        window.location.href = returnUrl;
+        console.log("router response: ", jsonResponseRouter)
+        window.location.href = this.returnUrl;
       } else {
         console.log("Error al procesar el pago");
       }
@@ -109,6 +109,20 @@ export class FullCheckoutContainerComponent {
       }, 5000)
     }
   
+  }
+
+  ngOnInit() {
+    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+    const baseUrl = "https://stage.tonder.io";
+    this.liteCheckout = new LiteCheckout({
+      baseUrlTonder: baseUrl,
+      signal: this.abortController.signal,
+      apiKeyTonder: apiKey
+    })
+    this.liteCheckout.verify3dsTransaction().then((response: any) => {
+      console.log('Verify 3ds response', response)
+    })
+
   }
 
 }

@@ -32,8 +32,8 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   initCheckout(renderButton?: boolean) {
     
-    const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
-    const returnUrl = "http://localhost:8100/tabs/tab2"
+    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+    const returnUrl = "http://localhost:8100/tabs/tab1"
     this.inlineCheckout?.removeCheckout()
     this.inlineCheckout = new InlineCheckout({
       apiKey: apiKey,
@@ -49,6 +49,9 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
     this.inlineCheckout.setCustomerEmail(this.customerData?.customer.email);
     this.inlineCheckout.injectCheckout();
+    this.inlineCheckout.verify3dsTransaction().then((response: any) => {
+      console.log('Verify 3ds response', response)
+    })
   }
 
   onExternalSelectorClick(event: any) {
