@@ -9,5 +9,5 @@ import { Component, Input } from '@angular/core';
 export class SuccessContainerComponent {
 
   @Input() name?: string;
-
+  @Input() message: string = 'El pago fue exitoso';
 }
