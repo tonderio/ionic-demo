@@ -28,7 +28,7 @@
     "@capacitor/keyboard": "5.0.7",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
-    "@tonder.io/ionic-full-sdk": "^0.0.34-beta",
+    "@tonder.io/ionic-full-sdk": "^0.0.36-beta",
     "@tonder.io/ionic-lite-sdk": "^0.0.34-beta",
     "@maskito/angular": "^2.3.2",
     "@maskito/core": "^2.3.2",
