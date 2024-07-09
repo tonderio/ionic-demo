@@ -157,17 +157,13 @@ export class LiteContainerComponent {
   }
   
   ngOnInit() {
-    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
-    const baseUrl = "https://stage.tonder.io";
     this.liteCheckout = new LiteCheckout({
-      baseUrlTonder: baseUrl,
+      baseUrlTonder: this.baseUrl,
       signal: this.abortController.signal,
-      apiKeyTonder: apiKey
+      apiKeyTonder: this.apiKey
     })
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)
     })
-
   }
-
 }
