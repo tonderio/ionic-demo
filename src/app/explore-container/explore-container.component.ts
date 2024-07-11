@@ -38,7 +38,6 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     this.inlineCheckout = new InlineCheckout({
       apiKey: apiKey,
       returnUrl: returnUrl,
-      successUrl: returnUrl,
       renderPaymentButton: !renderButton,
       callBack: (response) => {
         window.location.href = returnUrl;

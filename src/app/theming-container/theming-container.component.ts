@@ -92,7 +92,6 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
     this.inlineCheckout = new InlineCheckout({
       apiKey: apiKey,
       returnUrl: returnUrl,
-      successUrl: returnUrl,
       renderPaymentButton: true,
       styles: this.customStyles,
       containerId: "tonder-checkout-theming",
