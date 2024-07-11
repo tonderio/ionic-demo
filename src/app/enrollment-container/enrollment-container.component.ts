@@ -41,7 +41,6 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
     this.inlineCheckout = new InlineCheckout({
       apiKey: apiKey,
       returnUrl: returnUrl,
-      successUrl: returnUrl,
       renderPaymentButton: false,
       renderSaveCardButton: !renderButton,
       isEnrollmentCard: true,
