@@ -167,8 +167,6 @@ export class LiteContainerComponent {
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)
     })
-    this.liteCheckout.getCustomerCards("9169adc400bf768ece3052efa1e748edbb4b2b80")
-
   }
 
 }
