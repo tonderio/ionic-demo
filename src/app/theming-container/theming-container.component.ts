@@ -115,7 +115,7 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
     
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(250);
-    this.inlineCheckout.setCustomerEmail("sergio@grupoapok.com");
+    this.inlineCheckout.configureCheckout({customer: this.customerData?.customer});
     this.inlineCheckout.injectCheckout();
   } 
 
