@@ -63,7 +63,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
         this.inlineCheckout?.removeCheckout()
       },
     });
-    this.inlineCheckout.setCustomerEmail(this.customerData.customer.email);
+    this.inlineCheckout.configureCheckout({customer: this.customerData?.customer});
     this.inlineCheckout.injectCheckout();
   }
 
