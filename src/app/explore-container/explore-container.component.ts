@@ -46,7 +46,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     });
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
-    this.inlineCheckout.setCustomerEmail(this.customerData?.customer.email);
+    this.inlineCheckout.configureCheckout({customer: this.customerData?.customer});
     this.inlineCheckout.injectCheckout();
     this.inlineCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)

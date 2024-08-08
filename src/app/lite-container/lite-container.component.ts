@@ -26,7 +26,7 @@ export class LiteContainerComponent {
   });
 
   async onPayment(event: Event): Promise<any> {
-    
+
     try {
       const customerEmail = "john.c.calhoun@examplepetstore.com";
       const customerPhone = "+584169850705";
@@ -39,7 +39,7 @@ export class LiteContainerComponent {
       const { openpay_keys, reference, business, vault_id, vault_url } = merchantData;
 
       let deviceSessionIdTonder;
-      
+
       if (openpay_keys.merchant_id && openpay_keys.public_key) {
         deviceSessionIdTonder = await this.liteCheckout.getOpenpayDeviceSessionID(
           openpay_keys.merchant_id,
@@ -153,20 +153,17 @@ export class LiteContainerComponent {
         clearTimeout(timeout);
       }, 5000)
     }
-  
+
   }
-  
+
   ngOnInit() {
-    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
-    const baseUrl = "http://localhost:8000";
     this.liteCheckout = new LiteCheckout({
-      baseUrlTonder: baseUrl,
+      baseUrlTonder: this.baseUrl,
       signal: this.abortController.signal,
-      apiKeyTonder: apiKey
+      apiKeyTonder: this.apiKey
     })
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)
     })
   }
-
 }

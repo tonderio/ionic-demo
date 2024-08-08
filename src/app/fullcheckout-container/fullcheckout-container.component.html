@@ -3,37 +3,56 @@
   <form [formGroup]="paymentForm">
     
     <div class="lite-container-tonder">
-
-      <div id="id-name" class="empty-div">
-        <label for="name">Name: </label>
-        <input id="name" type="text" formControlName="name">
+      <div class="pay-new-card">
+        <input checked id="new" class="item-selected" (change)="selectAPM()" name="item-selected" type="radio"/>
+        <label class="card-item-label-new" for="new">
+          <img class="card-image" src="assets/cards/card.png" />
+          <div >Pagar con tarjeta</div>
+        </label>
       </div>
+      <div *ngIf="!selectedAPM" class="card-container">
+        <div id="id-name" class="empty-div">
+          <label for="name">Name: </label>
+          <input id="name" type="text" formControlName="name">
+        </div>
 
-      <div id="id-cardNumber" class="empty-div">
-        <label for="cardNumber">Card number: </label>
-        <input id="cardNumber" type="text" formControlName="cardNumber">
-      </div>
+        <div id="id-cardNumber" class="empty-div">
+          <label for="cardNumber">Card number: </label>
+          <input id="cardNumber" type="text" formControlName="cardNumber">
+        </div>
 
-      <div class="collect-row">
-        <div class="empty-div">
-          <label for="month">Month: </label>
-          <input id="month" type="text" formControlName="month">
-        </div>
-        <div class="expiration-year">
-          <label for="expirationYear">Year: </label>
-          <input id="expirationYear" type="text" formControlName="expirationYear">
-        </div>
-        <div class="empty-div">
-          <label for="cvv">CVV: </label>
-          <input id="cvv" type="text" formControlName="cvv">
+        <div class="collect-row">
+          <div class="empty-div">
+            <label for="month">Month: </label>
+            <input id="month" type="text" formControlName="month">
+          </div>
+          <div class="expiration-year">
+            <label for="expirationYear">Year: </label>
+            <input id="expirationYear" type="text" formControlName="expirationYear">
+          </div>
+          <div class="empty-div">
+            <label for="cvv">CVV: </label>
+            <input id="cvv" type="text" formControlName="cvv">
+          </div>
         </div>
       </div>
-      
+      <div class="apms-list-container">
+        <div *ngFor="let apm of liteCheckout?.activeAPMs" class="apm-item">
+          <input type="radio" class="item-selected" name="item-selected" (change)="selectAPM(apm)" id="{{apm.id}}">
+          <label class="apm-item-label" for="{{apm.id}}">
+            <div class="apm-image">
+              <div class="apm-image-border"></div>
+              <img [src]="apm.icon" alt="{{apm.label}}"/>
+            </div>
+            <div class="apm-name">{{apm.label}}</div>
+          </label>
+        </div>
+      </div>
       <div id="msgError">{{ errorMessage }}</div>
       <div id="msgNotification"></div>
-      
-      <button class="lite-pay-button" (click)="onPayment($event)">Pay</button>
-
+      <div class="container-pay-button">
+        <button class="lite-pay-button" (click)="onPayment($event)">Pay</button>
+      </div>
     </div>
   
   </form>
