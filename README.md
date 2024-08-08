@@ -27,7 +27,7 @@ $ ionic serve
 
 <font size="4">Theming</font>
 
-<font size="3">This section illustrate how to customize the checkout look and feel, it include two elements can be customized, the first element is the styles property to the checkout form</font>
+<font size="3">This section illustrate how to customize the checkout look and feel, it include two elements can be customized, the first element is the styles property to the checkout form.</font>
 
 ```javascript
 

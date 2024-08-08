@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
+import { APM } from '@tonder.io/ionic-lite-sdk/dist/types/commons';
 
 @Component({
   selector: 'app-fullcheckout-container',
@@ -17,6 +18,8 @@ export class FullCheckoutContainerComponent {
   apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
   baseUrl = "https://stage.tonder.io";
   returnUrl = "http://localhost:8100/tabs/tab5";
+  selectedAPM: APM | null = null;
+  activeAPMs: APM[] = []
   paymentForm = new FormGroup({
     name: new FormControl('Pedro Paramo'),
     cardNumber: new FormControl('4242424242424242'),
@@ -61,36 +64,33 @@ export class FullCheckoutContainerComponent {
           expiration_month: "",
           cvv: "",
           skyflow_id: ""
+        },
+        payment_method: this.selectedAPM?.payment_method
+      }
+
+      if(!this.selectedAPM){
+        const merchantData: any = await this.liteCheckout.getBusiness();
+
+        const { vault_id, vault_url } = merchantData;
+
+        const skyflowFields = {
+          card_number: this.paymentForm.value.cardNumber,
+          cvv: this.paymentForm.value.cvv,
+          expiration_month: this.paymentForm.value.month,
+          expiration_year: this.paymentForm.value.expirationYear,
+          cardholder_name: this.paymentForm.value.name
         }
+
+        const skyflowTokens = await this.liteCheckout.getSkyflowTokens({
+          vault_id: vault_id,
+          vault_url: vault_url,
+          data: skyflowFields
+        })
+
+       checkoutData.skyflowTokens = skyflowTokens;
       }
 
-      const liteCheckout = new LiteCheckout({
-        baseUrlTonder: this.baseUrl,
-        signal: this.abortController.signal,
-        apiKeyTonder: this.apiKey
-      })
-
-      const merchantData: any = await liteCheckout.getBusiness();
-
-      const { vault_id, vault_url } = merchantData;
-
-      const skyflowFields = {
-        card_number: this.paymentForm.value.cardNumber,
-        cvv: this.paymentForm.value.cvv,
-        expiration_month: this.paymentForm.value.month,
-        expiration_year: this.paymentForm.value.expirationYear,
-        cardholder_name: this.paymentForm.value.name
-      }
-
-      const skyflowTokens = await liteCheckout.getSkyflowTokens({
-        vault_id: vault_id,
-        vault_url: vault_url,
-        data: skyflowFields
-      })
-
-      checkoutData.skyflowTokens = skyflowTokens;
-
-      const jsonResponseRouter: any = await liteCheckout.startCheckoutRouterFull(
+      const jsonResponseRouter: any = await this.liteCheckout.startCheckoutRouterFull(
         checkoutData
       );
 
@@ -111,18 +111,19 @@ export class FullCheckoutContainerComponent {
   
   }
 
+  selectAPM(apm: APM | null = null) {
+    this.selectedAPM = apm;
+    console.log('Selected APM:', this.selectedAPM);
+  }
+
   ngOnInit() {
-    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
-    const baseUrl = "https://stage.tonder.io";
     this.liteCheckout = new LiteCheckout({
-      baseUrlTonder: baseUrl,
+      baseUrlTonder: this.baseUrl,
       signal: this.abortController.signal,
-      apiKeyTonder: apiKey
+      apiKeyTonder: this.apiKey
     })
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)
     })
-
   }
-
 }
