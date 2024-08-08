@@ -141,7 +141,8 @@ export class LiteContainerComponent {
       if (jsonResponseRouter) {
         console.log("router response: ", jsonResponseRouter)
         const url = jsonResponseRouter?.next_action?.redirect_to_url?.url
-        window.location = url;
+        if (!!url)
+          window.location = url;
       } else {
         console.log("Error al procesar el pago");
       }
