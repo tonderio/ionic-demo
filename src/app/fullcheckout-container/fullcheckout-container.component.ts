@@ -29,7 +29,7 @@ export class FullCheckoutContainerComponent {
   });
 
   async onPayment(event: Event): Promise<any> {
-    
+
     try {
       let checkoutData = {
         customer: {
@@ -108,7 +108,7 @@ export class FullCheckoutContainerComponent {
         clearTimeout(timeout);
       }, 5000)
     }
-  
+
   }
 
   selectAPM(apm: APM | null = null) {
@@ -116,7 +116,7 @@ export class FullCheckoutContainerComponent {
     console.log('Selected APM:', this.selectedAPM);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.liteCheckout = new LiteCheckout({
       baseUrlTonder: this.baseUrl,
       signal: this.abortController.signal,
@@ -125,5 +125,8 @@ export class FullCheckoutContainerComponent {
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)
     })
+    // Metodo para obtener APMs
+    this.activeAPMs = await this.liteCheckout.getActiveAPMs();
   }
+
 }
