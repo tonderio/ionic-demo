@@ -1,11 +1,11 @@
 <div id="container">
-  
+
   <form [formGroup]="paymentForm">
-    
+
     <div class="lite-container-tonder">
 
       <div id="id-name" class="empty-div">
-        <label for="name">Namesss: </label>
+        <label for="name">Name: </label>
         <input id="name" type="text" formControlName="name">
       </div>
 
@@ -28,12 +28,12 @@
           <input id="cvv" type="text" formControlName="cvv">
         </div>
       </div>
-      
+
       <div id="msgError">{{ errorMessage }}</div>
       <div id="msgNotification"></div>
-      
+
       <button class="lite-pay-button" (click)="onPayment($event)">Pay</button>
 
     </div>
-  
+
   </form>

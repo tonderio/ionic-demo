@@ -31,7 +31,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
   }
 
   initCheckout(renderButton?: boolean) {
-    
+
     const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
     const returnUrl = "http://localhost:8100/tabs/tab1"
     this.inlineCheckout?.removeCheckout()
@@ -42,7 +42,14 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
       callBack: (response) => {
         window.location.href = returnUrl;
       },
-      isOpenPaySandbox: true
+      isOpenPaySandbox: true,
+      customization: {
+        saveCards: {
+          showSaveCardOption: true, // Usar para mostrar/ocultar el checkbox de guardar tarjeta para futuros pagos
+          autoSave: false,           // Usar para guardar automáticamente la tarjeta (sin necesidad de mostrar el checkbox)
+          showSaved: true           // Usar para mostrar/ocultar el listado de tarjetas guardadas
+        }
+      },
     });
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
@@ -57,7 +64,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     this.externalButton = event.target.checked;
     this.initCheckout(event.target.checked)
   }
-  
+
   ngOnInit() {
     this.customerData = {
       customer: {

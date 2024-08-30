@@ -1,7 +1,7 @@
 <div id="container">
-  
+
   <form [formGroup]="paymentForm">
-    
+
     <div class="lite-container-tonder">
       <div class="pay-new-card">
         <input checked id="new" class="item-selected" (change)="selectAPM()" name="item-selected" type="radio"/>
@@ -12,7 +12,7 @@
       </div>
       <div *ngIf="!selectedAPM" class="card-container">
         <div id="id-name" class="empty-div">
-          <label for="name">Name: </label>
+          <label for="name">Namess: </label>
           <input id="name" type="text" formControlName="name">
         </div>
 
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="apms-list-container">
-        <div *ngFor="let apm of liteCheckout?.activeAPMs" class="apm-item">
+        <div *ngFor="let apm of activeAPMs" class="apm-item">
           <input type="radio" class="item-selected" name="item-selected" (change)="selectAPM(apm)" id="{{apm.id}}">
           <label class="apm-item-label" for="{{apm.id}}">
             <div class="apm-image">
@@ -54,5 +54,5 @@
         <button class="lite-pay-button" (click)="onPayment($event)">Pay</button>
       </div>
     </div>
-  
+
   </form>
