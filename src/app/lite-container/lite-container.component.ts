@@ -1,6 +1,9 @@
+// @deprecated
+// these example is deprecated, use explore-container/theming-container for full-sdk or fullcheckout-container for lite-sdk
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
+import {ILiteCheckout} from "@tonder.io/ionic-lite-sdk/dist/types/liteInlineCheckout";
 
 @Component({
   selector: 'app-lite-container',
@@ -12,7 +15,7 @@ export class LiteContainerComponent {
 
   @Input() name?: string;
   @Input() errorMessage?: string;
-  liteCheckout?: any;
+  liteCheckout!: ILiteCheckout;
   abortController = new AbortController();
   apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
   baseUrl = "https://stage.tonder.io";
@@ -159,9 +162,12 @@ export class LiteContainerComponent {
 
   ngOnInit() {
     this.liteCheckout = new LiteCheckout({
-      baseUrlTonder: this.baseUrl,
-      signal: this.abortController.signal,
-      apiKeyTonder: this.apiKey
+      baseUrlTonder: this.baseUrl, // deprecated method, no longer required
+      signal: this.abortController.signal, // deprecated method, no longer required
+      apiKeyTonder: this.apiKey, // deprecated method, use apiKey
+      returnUrl: "",
+      apiKey: this.apiKey,
+      mode: "stage" // You can now specify the environment type, by default stage
     })
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)

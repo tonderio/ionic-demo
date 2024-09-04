@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
-import { MessageService } from '../enrollment-container/message.service'; 
+import { MessageService } from '../enrollment-container/message.service';
 import { Router } from '@angular/router';
 import { MaskitoOptions, MaskitoElementPredicate, maskitoTransform } from '@maskito/core';
 import { AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import {ILiteCheckout} from "@tonder.io/ionic-lite-sdk/dist/types/liteInlineCheckout";
 
 @Component({
   selector: 'app-enrollment-lite-native-container',
@@ -26,7 +27,7 @@ export class EnrollmentLiteNativeContainerComponent {
     mask: [
       /\d/, /\d/, '/', /\d/, /\d/
     ]
-  }; 
+  };
   readonly cardMask: MaskitoOptions = {
     mask: [
       ...Array(4).fill(/\d/),
@@ -63,56 +64,54 @@ export class EnrollmentLiteNativeContainerComponent {
     }
     try {
       const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
-      const baseUrl = "https://stage.tonder.io";
-      const abortController = new AbortController();
 
-      let checkoutData = {
-        // set your customer information
-        customer: {
-          name: "Jhon",
-          lastname: "Doe",
-          email: "john.c.calhoun@examplepetstore.com",
-          phone: "+58452258525"
-        },
-        skyflowTokens: {
-          cardholder_name: "",
-          card_number: "",
-          expiration_year: "",
-          expiration_month: "",
-          cvv: "",
-          skyflow_id: ""
-        }
+      let customer =  {
+        email: "john.c.calhoun@examplepetstore.com",
       }
 
-      const liteCheckout = new LiteCheckout({
-        baseUrlTonder: baseUrl,
-        signal: abortController.signal,
-        apiKeyTonder: apiKey
+      const liteCheckout: ILiteCheckout = new LiteCheckout({
+        // baseUrlTonder: baseUrl, // deprecated method, no longer required
+        // signal: abortController.signal, // deprecated method, no longer required
+        // apiKeyTonder: apiKey, // deprecated method, use apiKey
+        apiKey: apiKey,
+        mode: "stage" // You can now specify the environment type, by default stage
       })
 
-      const merchantData: any = await liteCheckout.getBusiness();
+      // These methods are deprecated and will be removed in future versions. Instead, you can use the configureCheckout and saveCustomerCard functions directly.
 
-      const { vault_id, vault_url } = merchantData;
+      // const merchantData: any = await liteCheckout.getBusiness();
+      //
+      // const { vault_id, vault_url } = merchantData;
+      // const expirationDate = this.paymentMethodForm.value.expirationDate?.split("/");
+      // const skyflowFields = {
+      //   card_number: this.paymentMethodForm.value.cardNumber,
+      //   cvv: this.paymentMethodForm.value.cvv,
+      //   expiration_month: expirationDate ? expirationDate[0] : '',
+      //   expiration_year: expirationDate ? expirationDate[1] : '',
+      //   cardholder_name: this.paymentMethodForm.value.name
+      // }
+      // const skyflowTokens = await liteCheckout.getSkyflowTokens({
+      //   vault_id: vault_id,
+      //   vault_url: vault_url,
+      //   data: skyflowFields
+      // })
+      //
+      // const customerResponse = await liteCheckout.customerRegister(checkoutData.customer.email)
+      // if("auth_token" in customerResponse) {
+      //   const { auth_token } = customerResponse;
+      //   await liteCheckout.registerCustomerCard(auth_token, { skyflow_id: skyflowTokens.skyflow_id });
+      // }
+
+      liteCheckout.configureCheckout({customer: customer})
       const expirationDate = this.paymentMethodForm.value.expirationDate?.split("/");
-      const skyflowFields = {
-        card_number: this.paymentMethodForm.value.cardNumber,
-        cvv: this.paymentMethodForm.value.cvv,
+      await liteCheckout.saveCustomerCard({
+        card_number: this.paymentMethodForm.value.cardNumber || "",
+        cvv: this.paymentMethodForm.value.cvv || "",
         expiration_month: expirationDate ? expirationDate[0] : '',
         expiration_year: expirationDate ? expirationDate[1] : '',
-        cardholder_name: this.paymentMethodForm.value.name
-      }
-      const skyflowTokens = await liteCheckout.getSkyflowTokens({
-        vault_id: vault_id,
-        vault_url: vault_url,
-        data: skyflowFields
-      })
+        cardholder_name: this.paymentMethodForm.value.name || ""
+      });
 
-      const customerResponse = await liteCheckout.customerRegister(checkoutData.customer.email)
-      if("auth_token" in customerResponse) {
-        const { auth_token } = customerResponse;
-        await liteCheckout.registerCustomerCard(auth_token, { skyflow_id: skyflowTokens.skyflow_id });
-      }
- 
       this.messageService.setMessage('Tarjeta guardada exitosamente.');
         this.router.navigate(['/tabs/tab2']);
 
@@ -124,7 +123,6 @@ export class EnrollmentLiteNativeContainerComponent {
         clearTimeout(timeout);
       }, 5000)
     }
-  
   }
 
   onCardNumberChange(cardNumber: string) {
@@ -142,7 +140,7 @@ export class EnrollmentLiteNativeContainerComponent {
       message: message,
       buttons: ['OK']
     });
-  
+
     await alert.present();
   }
 }

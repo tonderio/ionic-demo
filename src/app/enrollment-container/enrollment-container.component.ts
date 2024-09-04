@@ -3,10 +3,9 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
 import { Platform } from '@ionic/angular';
-import { Card } from '@tonder.io/ionic-full-sdk/dist/helpers/template';
-
-import { MessageService } from './message.service'; 
+import { MessageService } from './message.service';
 import { Router } from '@angular/router';
+import {IInlineCheckout} from "@tonder.io/ionic-full-sdk/dist/types/inlineCheckout";
 
 @Component({
   selector: 'app-enrollment-container',
@@ -20,7 +19,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
 
   externalButton: boolean;
 
-  inlineCheckout?: any;
+  inlineCheckout!: IInlineCheckout;
 
   customerData: any;
 
@@ -29,12 +28,12 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
     this.customerData = null;
   }
 
-  onSave(event: any) {
-    this.inlineCheckout.saveCard()
+  async onSave(event: any) {
+    await this.inlineCheckout.saveCard()
   }
 
-  initCheckout(renderButton: boolean = false) {
-    
+  async initCheckout(renderButton: boolean = false) {
+
     const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
     const returnUrl = "http://localhost:8100/tabs/tab2"
     this.inlineCheckout?.removeCheckout()
@@ -64,14 +63,14 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
       },
     });
     this.inlineCheckout.configureCheckout({customer: this.customerData?.customer});
-    this.inlineCheckout.injectCheckout();
+    await this.inlineCheckout.injectCheckout();
   }
 
   onExternalSelectorClick(event: any) {
     this.externalButton = event.target.checked;
     this.initCheckout(event.target.checked)
   }
-  
+
   ngOnInit() {
     this.customerData = {
       customer: {

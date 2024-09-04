@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { InlineCheckout } from '@tonder.io/ionic-full-sdk/dist';
 
 import { Platform } from '@ionic/angular';
+import {InlineCheckout} from "@tonder.io/ionic-full-sdk";
 
 @Component({
   selector: 'app-theming-container',
@@ -24,8 +24,8 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
   }
 
   initCheckout() {
-    const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
-    const returnUrl = "http://localhost:8100/tabs/tab2"
+    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+    const returnUrl = "http://localhost:8100/tabs/tab4"
     this.inlineCheckout?.removeCheckout()
 
     this.customStyles = {
@@ -93,6 +93,7 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
       apiKey: apiKey,
       returnUrl: returnUrl,
       renderPaymentButton: true,
+      mode: "stage", // You can now specify the environment type, by default stage
       styles: this.customStyles,
       containerId: "tonder-checkout-theming",
       collectorIds: {
@@ -112,12 +113,12 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
         }
       }
     });
-    
+
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(250);
     this.inlineCheckout.configureCheckout({customer: this.customerData?.customer});
     this.inlineCheckout.injectCheckout();
-  } 
+  }
 
   ngOnInit() {
     this.customerData = {
