@@ -72,7 +72,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
       callBack: (response) => {
         window.location.href = returnUrl;
       },
-      mode: "development", // You can now specify the environment type, by default stage
+      mode: "stage", // You can now specify the environment type, by default stage
       isOpenPaySandbox: true,
       customization: {
         saveCards: {
