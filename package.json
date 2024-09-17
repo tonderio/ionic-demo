@@ -32,13 +32,8 @@
     "@maskito/core": "^2.3.2",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
-<<<<<<< HEAD
-    "@tonder.io/ionic-full-sdk": "^0.0.38-beta.16",
-    "@tonder.io/ionic-lite-sdk": "^0.0.34-beta.3",
-=======
     "@tonder.io/ionic-full-sdk": "^0.0.40-beta.1",
     "@tonder.io/ionic-lite-sdk": "^0.0.36-beta.1",
->>>>>>> 9e88091 (Actualizar full)
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "zone.js": "~0.14.2"
