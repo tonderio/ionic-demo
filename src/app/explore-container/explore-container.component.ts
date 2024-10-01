@@ -32,16 +32,17 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   initCheckout(renderButton?: boolean) {
 
-    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
-    const returnUrl = "http://localhost:8100/tabs/tab1"
+    const secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
+    const apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
+    const returnUrl = "http://localhost:8100/tabs/tab2"
     this.inlineCheckout?.removeCheckout()
     this.inlineCheckout = new InlineCheckout({
-      apiKey: apiKey,
+      publicApiKey: apiKey,
       returnUrl: returnUrl,
       renderPaymentButton: !renderButton,
-      callBack: (response) => {
+      callBack: (response: any) => {
         console.log("Excecuted Callback");
-        window.location.href = returnUrl;
+        //window.location.href = returnUrl;
       },
       isOpenPaySandbox: true,
       customization: {
@@ -49,12 +50,14 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
           showSaveCardOption: true, // Usar para mostrar/ocultar el checkbox de guardar tarjeta para futuros pagos
           autoSave: false,           // Usar para guardar automáticamente la tarjeta (sin necesidad de mostrar el checkbox)
           showSaved: true           // Usar para mostrar/ocultar el listado de tarjetas guardadas
-        }
+        },
+        redirectOnComplete: false
       },
     });
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
     this.inlineCheckout.configureCheckout({customer: this.customerData?.customer});
+    this.inlineCheckout.setSecretApiKey(secretApiKey)
     this.inlineCheckout.injectCheckout();
     this.inlineCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)
@@ -80,21 +83,21 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         phone: "+58 4169855522"
       },
       cart: {
-        total: 2500,
+        total: 120,
         items: [
           {
             description: "Test product description",
             quantity: 1,
-            price_unit: 2500,
+            price_unit: 120,
             discount: 25,
             taxes: 12,
             product_reference: 12,
             name: "Test product",
-            amount_total: 2500
+            amount_total: 120
           }
         ]
       },
-      currency: "MXN"
+      currency: "BRL"
     }
     this.initCheckout()
   }

@@ -28,7 +28,9 @@ export class EnrollmentLiteContainerComponent {
   async onSave(event: Event): Promise<any> {
     
     try {
-      const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
+
+      const secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
+      const apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43";
       const baseUrl = "https://stage.tonder.io";
       const abortController = new AbortController();
 
@@ -52,7 +54,7 @@ export class EnrollmentLiteContainerComponent {
       const liteCheckout = new LiteCheckout({
         baseUrlTonder: baseUrl,
         signal: abortController.signal,
-        apiKeyTonder: apiKey
+        publicApiKeyTonder: apiKey
       })
 
       const merchantData: any = await liteCheckout.getBusiness();
@@ -75,7 +77,11 @@ export class EnrollmentLiteContainerComponent {
       const customerResponse = await liteCheckout.customerRegister(checkoutData.customer.email)
       if("auth_token" in customerResponse) {
         const { auth_token } = customerResponse;
-        await liteCheckout.registerCustomerCard(auth_token, { skyflow_id: skyflowTokens.skyflow_id });
+        const secureTokenResponse = await liteCheckout.getSecureToken(secretApiKey)
+        if("access" in secureTokenResponse) {
+          const { access } = secureTokenResponse;
+          await liteCheckout.registerCustomerCard(access, auth_token, { skyflow_id: skyflowTokens.skyflow_id });
+        }
       }
  
       this.messageService.setMessage('Tarjeta guardada exitosamente.');
