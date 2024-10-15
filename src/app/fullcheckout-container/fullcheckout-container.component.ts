@@ -122,7 +122,7 @@ export class FullCheckoutContainerComponent {
     this.liteCheckout = new LiteCheckout({
       baseUrlTonder: this.baseUrl,
       signal: this.abortController.signal,
-      publicApiKeyTonder: this.apiKey
+      apiKey: this.apiKey
     })
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)

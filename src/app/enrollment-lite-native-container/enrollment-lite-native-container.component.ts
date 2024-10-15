@@ -88,7 +88,7 @@ export class EnrollmentLiteNativeContainerComponent {
       const liteCheckout = new LiteCheckout({
         baseUrlTonder: baseUrl,
         signal: abortController.signal,
-        publicApiKeyTonder: apiKey
+        apiKey: apiKey
       })
 
       const merchantData: any = await liteCheckout.getBusiness();
