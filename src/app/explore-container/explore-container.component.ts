@@ -54,8 +54,6 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
           returnUrl: returnUrl,
           renderPaymentButton: !renderButton,
           callBack: (response: any) => {
-            console.log("Por aqui");
-            
             this.showLayer = true
           },
           isOpenPaySandbox: true,
@@ -84,6 +82,8 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
   
   onLayerClick(event: any) {
     this.showLayer = false;
+    this.inlineCheckout?.removeCheckout()
+    this.initCheckout()
   }
 
   onExternalSelectorClick(event: any) {

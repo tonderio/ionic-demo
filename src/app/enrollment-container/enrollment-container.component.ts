@@ -40,7 +40,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
     const returnUrl = "http://localhost:8100/tabs/tab2"
     this.inlineCheckout?.removeCheckout()
     this.inlineCheckout = new InlineCheckout({
-      publicApiKey: apiKey,
+      apiKey: apiKey,
       returnUrl: returnUrl,
       renderPaymentButton: false,
       renderSaveCardButton: !renderButton,
