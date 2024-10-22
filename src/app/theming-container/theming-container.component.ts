@@ -24,7 +24,8 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
   }
 
   initCheckout() {
-    const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
+    const secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
+    const apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
     const returnUrl = "http://localhost:8100/tabs/tab2"
     this.inlineCheckout?.removeCheckout()
 
@@ -116,6 +117,7 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(250);
     this.inlineCheckout.configureCheckout({customer: this.customerData?.customer});
+    this.inlineCheckout.setSecretApiKey(secretApiKey)
     this.inlineCheckout.injectCheckout();
   } 
 

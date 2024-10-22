@@ -14,7 +14,8 @@ export class LiteContainerComponent {
   @Input() errorMessage?: string;
   liteCheckout?: any;
   abortController = new AbortController();
-  apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+  secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
+  apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
   baseUrl = "https://stage.tonder.io";
   returnUrl = "http://localhost:8100/tabs/tab3";
   paymentForm = new FormGroup({
@@ -161,7 +162,7 @@ export class LiteContainerComponent {
     this.liteCheckout = new LiteCheckout({
       baseUrlTonder: this.baseUrl,
       signal: this.abortController.signal,
-      apiKeyTonder: this.apiKey
+      apiKey: this.apiKey
     })
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)
