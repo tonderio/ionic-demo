@@ -36,3 +36,21 @@
   margin-bottom: 20px;
   margin-top: 20px;
 }
+
+.no-redirect-on-complete {
+  position: fixed;
+  inset: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+}
+
+.tds-iframe {
+  border: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 30 !important;
+  background-color: white !important;
+}
