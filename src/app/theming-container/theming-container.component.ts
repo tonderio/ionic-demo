@@ -23,10 +23,10 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
     this.customerData = null;
   }
 
-  initCheckout() {
+  async initCheckout() {
     const secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
     const apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
-    const returnUrl = "http://localhost:8100/tabs/tab2"
+    const returnUrl = "http://localhost:8100/tabs/tab4"
     this.inlineCheckout?.removeCheckout()
 
     this.customStyles = {
@@ -96,6 +96,7 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
       renderPaymentButton: true,
       styles: this.customStyles,
       containerId: "tonder-checkout-theming",
+
       collectorIds: {
         cardNumber: "collectCardNumberTheming",
         cvv: "collectCvvTheming",
@@ -113,13 +114,14 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
         }
       }
     });
-    
+    const secureToken = await this.inlineCheckout.getSecureToken(secretApiKey)
+
+    this.inlineCheckout.configureCheckout({customer: this.customerData?.customer, secureToken: secureToken?.access});
     this.inlineCheckout.setPaymentData(this.customerData)
     this.inlineCheckout.setCartTotal(250);
-    this.inlineCheckout.configureCheckout({customer: this.customerData?.customer});
-    this.inlineCheckout.setSecretApiKey(secretApiKey)
+
     this.inlineCheckout.injectCheckout();
-  } 
+  }
 
   ngOnInit() {
     this.customerData = {

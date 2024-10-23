@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
-import { MessageService } from '../enrollment-container/message.service'; 
+import { MessageService } from '../enrollment-container/message.service';
 import { Router } from '@angular/router';
+import {ISaveCardRequest} from "@tonder.io/ionic-lite-sdk/src/types/card";
 
 @Component({
   selector: 'app-enrollment-lite-container',
@@ -26,7 +27,7 @@ export class EnrollmentLiteContainerComponent {
   constructor(private messageService: MessageService, private router: Router) {}
 
   async onSave(event: Event): Promise<any> {
-    
+
     try {
 
       const secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
@@ -56,34 +57,23 @@ export class EnrollmentLiteContainerComponent {
         signal: abortController.signal,
         apiKey: apiKey
       })
+      const secureToken = await liteCheckout.getSecureToken(secretApiKey)
 
-      const merchantData: any = await liteCheckout.getBusiness();
+      liteCheckout.configureCheckout({
+        customer: checkoutData.customer,
+        secureToken: secureToken?.access
+      });
 
-      const { vault_id, vault_url } = merchantData;
-
-      const skyflowFields = {
-        card_number: this.paymentForm.value.cardNumber,
-        cvv: this.paymentForm.value.cvv,
-        expiration_month: this.paymentForm.value.month,
-        expiration_year: this.paymentForm.value.expirationYear,
-        cardholder_name: this.paymentForm.value.name
+      const skyflowFields: ISaveCardRequest = {
+        card_number: this.paymentForm.value.cardNumber!,
+        cvv: this.paymentForm.value.cvv!,
+        expiration_month: this.paymentForm.value.month!,
+        expiration_year: this.paymentForm.value.expirationYear!,
+        cardholder_name: this.paymentForm.value.name!
       }
-      const skyflowTokens = await liteCheckout.getSkyflowTokens({
-        vault_id: vault_id,
-        vault_url: vault_url,
-        data: skyflowFields
-      })
 
-      const customerResponse = await liteCheckout.customerRegister(checkoutData.customer.email)
-      if("auth_token" in customerResponse) {
-        const { auth_token } = customerResponse;
-        const secureTokenResponse = await liteCheckout.getSecureToken(secretApiKey)
-        if("access" in secureTokenResponse) {
-          const { access } = secureTokenResponse;
-          await liteCheckout.registerCustomerCard(access, auth_token, { skyflow_id: skyflowTokens.skyflow_id });
-        }
-      }
- 
+      await liteCheckout.saveCustomerCard(skyflowFields);
+
       this.messageService.setMessage('Tarjeta guardada exitosamente.');
         this.router.navigate(['/tabs/tab2']);
 
@@ -94,7 +84,7 @@ export class EnrollmentLiteContainerComponent {
         clearTimeout(timeout);
       }, 5000)
     }
-  
+
   }
 
 }

@@ -61,14 +61,14 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
             saveCards: {
               showSaveCardOption: true, // Usar para mostrar/ocultar el checkbox de guardar tarjeta para futuros pagos
               autoSave: false,           // Usar para guardar automáticamente la tarjeta (sin necesidad de mostrar el checkbox)
-              showSaved: false           // Usar para mostrar/ocultar el listado de tarjetas guardadas
+              showSaved: true           // Usar para mostrar/ocultar el listado de tarjetas guardadas
             },
             redirectOnComplete: false
           },
         });
         this.inlineCheckout.setPaymentData(this.customerData)
         this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
-        this.inlineCheckout.configureCheckout({ 
+        this.inlineCheckout.configureCheckout({
           customer: this.customerData?.customer,
           secureToken: result?.access
         });
@@ -79,7 +79,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
       })
     })
   }
-  
+
   onLayerClick(event: any) {
     this.showLayer = false;
     this.inlineCheckout?.removeCheckout()

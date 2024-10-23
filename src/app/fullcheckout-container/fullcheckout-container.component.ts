@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { APM } from '@tonder.io/ionic-lite-sdk/dist/types/commons';
+import {ILiteCheckout} from "@tonder.io/ionic-lite-sdk/dist/types/liteInlineCheckout";
 
 @Component({
   selector: 'app-fullcheckout-container',
@@ -13,9 +14,9 @@ export class FullCheckoutContainerComponent {
 
   @Input() name?: string;
   @Input() errorMessage?: string;
-  liteCheckout?: any;
+  liteCheckout!: ILiteCheckout;
   abortController = new AbortController();
-  
+
   secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
   apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
   baseUrl = "https://stage.tonder.io";
