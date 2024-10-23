@@ -7,4 +7,5 @@
     <label for="external-selector">External button: </label>
     <input id="external-selector" (change)="onExternalSelectorClick($event)" type="checkbox">
   </div>
+  <div *ngIf="showLayer" (click)="onLayerClick($event)" class="no-redirect-on-complete">Este layout se muestra al ejecutar el callback de éxito</div>
 </div>
