@@ -50,6 +50,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         const returnUrl = "http://localhost:8100/tabs/tab2"
         this.inlineCheckout?.removeCheckout()
         this.inlineCheckout = new InlineCheckout({
+          mode: "stage",
           apiKey: apiKey,
           returnUrl: returnUrl,
           renderPaymentButton: !renderButton,

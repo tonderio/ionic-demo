@@ -32,7 +32,7 @@
     "@maskito/core": "^2.3.2",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
-    "@tonder.io/ionic-full-sdk": "^0.0.47-beta.DEV1406.a897fdd",
+    "@tonder.io/ionic-full-sdk": "^0.0.47-beta.DEV1406.3a5debd",
     "@tonder.io/ionic-lite-sdk": "^0.0.51",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
