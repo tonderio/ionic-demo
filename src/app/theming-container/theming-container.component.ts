@@ -89,7 +89,6 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
         expiryYearPlaceholder: ''
       }
     }
-
     this.inlineCheckout = new InlineCheckout({
       apiKey: apiKey,
       returnUrl: returnUrl,
@@ -116,9 +115,10 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
     });
     const secureToken = await this.inlineCheckout.getSecureToken(secretApiKey)
 
-    this.inlineCheckout.configureCheckout({customer: this.customerData?.customer, secureToken: secureToken?.access});
-    this.inlineCheckout.setPaymentData(this.customerData)
-    this.inlineCheckout.setCartTotal(250);
+    this.inlineCheckout.configureCheckout({...this.customerData, secureToken: secureToken?.access});
+    // DEPRECATED FUNCTIONS, REPLACE WITH configureCheckout
+    // this.inlineCheckout.setPaymentData(this.customerData)
+    // this.inlineCheckout.setCartTotal(250);
 
     this.inlineCheckout.injectCheckout();
   }
