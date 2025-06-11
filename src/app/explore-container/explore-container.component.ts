@@ -64,8 +64,37 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
               // autoSave: true,           // Usar para guardar automáticamente la tarjeta (sin necesidad de mostrar el checkbox)
               showSaved: true           // Usar para mostrar/ocultar el listado de tarjetas guardadas
             },
+            paymentButton: {
+              show: true,
+              text: "Depositar",
+              showAmount: true
+            },
             redirectOnComplete: false
           },
+          events: {
+              cardHolderEvents: {
+                onChange: (event: any) => {
+                  // console.log('Card holder change event', event);
+                },
+                onFocus: (event: any) => {
+                  // console.log('Card holder focus event', event);
+                },
+                onBlur: (event: any) => {
+                  // console.log('Card holder blur event', event);
+                }
+              },
+              cvvEvents: {
+                onChange: (event: any) => {
+                  console.log('Cvv change event', event);
+                },
+                onFocus: (event: any) => {
+                  console.log('Cvv focus event', event);
+                },
+                onBlur: (event: any) => {
+                  console.log('Cvv blur event', event);
+                }
+              }
+          }
         });
         // this.inlineCheckout.setPaymentData(this.customerData)
         // this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
@@ -120,7 +149,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
           }
         ]
       },
-      currency: "BRL"
+      currency: "MXN"
     }
     this.initCheckout()
   }

@@ -58,6 +58,30 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
         msgNotification: "msgNotificationEnrollment",
         tonderSaveCardButton: "tonderSaveCardButtonEnrollment"
       },
+      events: {
+              cardHolderEvents: {
+                onChange: (event: any) => {
+                  // console.log('Card holder change event', event);
+                },
+                onFocus: (event: any) => {
+                  // console.log('Card holder focus event', event);
+                },
+                onBlur: (event: any) => {
+                  // console.log('Card holder blur event', event);
+                }
+              },
+              cvvEvents: {
+                onChange: (event: any) => {
+                  console.log('Cvv change event', event);
+                },
+                onFocus: (event: any) => {
+                  console.log('Cvv focus event', event);
+                },
+                onBlur: (event: any) => {
+                  console.log('Cvv blur event', event);
+                }
+              }
+      },
       callBack: (response) => {
         this.messageService.setMessage('Tarjeta guardada exitosamente.');
         this.router.navigate(['/tabs/tab2']);
