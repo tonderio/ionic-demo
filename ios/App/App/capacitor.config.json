@@ -1,0 +1,8 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "tonder-integration",
+	"webDir": "www",
+	"server": {
+		"androidScheme": "https"
+	}
+}

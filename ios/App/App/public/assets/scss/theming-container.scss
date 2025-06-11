@@ -1,0 +1,298 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap");
+
+#tonder-checkout-theming {
+
+  .container-tonder {
+    background-color: #F9F9F9;
+    margin: 0 auto;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    max-width: 600px;
+    border: solid 1px #e3e3e3;
+
+    .collect-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .collect-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .collect-row > :first-child {
+      min-width: 120px;
+    }
+
+    .expiration-year {
+      position: relative !important;
+      padding-top: 24px !important;
+    }
+
+    .empty-div {
+      position: relative;
+      height: 80px;
+      margin-top: 2px;
+      margin-bottom: 4px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .error-container{
+      color: red;
+      background-color: #FFDBDB;
+      margin-bottom: 13px;
+      font-size: 80%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .error-custom-inputs-tonder {
+      background-color: white;
+      position: absolute;
+      left: 0px;
+      bottom: -1px;
+      width: 100%;
+      font-size: 12px;
+      color: red;
+      font-family: "Inter", sans-serif !important;
+    }
+
+    .expiration-year .error-custom-inputs-tonder {
+      background-color: white;
+      position: absolute;
+      left: 0px;
+      bottom: 3px;
+      width: 100%;
+      font-size: 12px;
+      color: red;
+      font-family: "Inter", sans-serif !important;
+    }
+
+    .message-container{
+      color: green;
+      background-color: #DAFCE4;
+      margin-bottom: 13px;
+      font-size: 80%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .pay-button {}
+
+    .pay-button:disabled, .pay-button[disabled] {
+      background-color: #B9B9B9;
+    }
+
+    .lds-dual-ring {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+    }
+
+    .lds-dual-ring:after {
+      content: " ";
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 6px solid #fff;
+      border-color: #fff transparent #fff transparent;
+      animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+    @keyframes lds-dual-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .payment_method_zplit {
+        font-size: 16px;
+        width: 100%;
+      }
+
+      .payment_method_zplit  label img {
+        display: none;
+      }
+    }
+
+  }
+
+  .cards-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 33% 20px;
+  }
+
+  .checkbox label {
+    margin-left: 10px;
+    font-size: '12px';
+    font-weight: '500';
+    color: #1D1D1D;
+    font-family: "Inter", sans-serif;
+  }
+
+  .checkbox {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .pay-new-card {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #1D1D1D;
+    gap: 33% 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px 30px;
+    width: 100%;
+    position: relative;
+  }
+
+  .pay-new-card .card-number {
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+  }
+
+  .card-image {
+    width: 39px;
+    height: 24px;
+    text-align: left;
+  }
+
+  .card-item-label-new {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #1D1D1D;
+    gap: 33% 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .card-item-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1D1D1D;
+    gap: 33% 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .card-item {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 33% 15px;
+    padding: 0px 30px;
+  }
+
+  .card-item .card-number {
+    font-size: 16px;
+    font-family: "Inter", sans-serif !important;
+  }
+
+  .card-item .card-expiration {
+    font-size: 16px;
+    font-family: "Inter", sans-serif !important;
+  }
+
+  .card_selected {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    cursor: pointer;
+    border-radius: 100%;
+    border: 1px #3bc635 solid;
+    color: #3bc635;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .card_selected:before {
+    width: 8px;
+    height: 8px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .card_selected:checked {
+    border: 1px #3bc635 solid;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    appearance: none;
+    cursor: pointer;
+    border-radius: 100%;
+    color: #3bc635;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .card_selected:checked:before {
+    content: "";
+    border: 1px #3bc635 solid;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    opacity: 50;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .card_selected:hover:before {
+    width: 8px;
+    height: 8px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    background-color: #3bc635;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    opacity: 10;
+  }
+
+}
+
+
