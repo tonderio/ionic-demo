@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
 import { Platform } from '@ionic/angular';
-import { PaymentData } from '@tonder.io/ionic-full-sdk/dist/types/commons';
+import { IProcessPaymentRequest } from '@tonder.io/ionic-full-sdk/dist/types/commons';
 
 @Component({
   selector: 'app-explore-container',
@@ -21,7 +21,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   inlineCheckout?: any;
 
-  customerData: PaymentData | null;
+  customerData: IProcessPaymentRequest | null;
 
   secureToken: string | null;
 
