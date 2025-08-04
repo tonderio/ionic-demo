@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
+import { IProcessPaymentRequest } from '@tonder.io/ionic-lite-sdk/dist/types/checkout';
 import { APM } from '@tonder.io/ionic-lite-sdk/dist/types/commons';
 import {ILiteCheckout} from "@tonder.io/ionic-lite-sdk/dist/types/liteInlineCheckout";
 
@@ -34,66 +35,51 @@ export class FullCheckoutContainerComponent {
   async onPayment(event: Event): Promise<any> {
 
     try {
-      let checkoutData = {
+      let checkoutData: IProcessPaymentRequest = {
         customer: {
-          name: "Jhon",
-          lastname: "Doe",
-          email: "john.c.calhoun@examplepetstore.com",
-          phone: "+58452258525"
+          firstName: "Pedro",
+          lastName: "Perez",
+          country: "Finlandia",
+          street: "The street",
+          city: "The city",
+          state: "The state",
+          postCode: "98746",
+          email: "dav@gmail.com",
+          phone: "+58 4169855522"
         },
-        order: {
+        cart: {
+          total: 120,
           items: [
             {
               description: "Test product description",
               quantity: 1,
-              price_unit: 25,
-              discount: 1,
+              price_unit: 120,
+              discount: 25,
               taxes: 12,
-              product_reference: 89456123,
+              product_reference: 12,
               name: "Test product",
-              amount_total: 25
+              amount_total: 120
             }
           ]
         },
-        return_url: this.returnUrl,
-        total: 25,
-        isSandbox: true,
-        metadata: null,
         currency: "MXN",
-        skyflowTokens: {
-          cardholder_name: "",
-          card_number: "",
-          expiration_year: "",
-          expiration_month: "",
-          cvv: "",
-          skyflow_id: ""
-        },
         payment_method: this.selectedAPM?.payment_method
       }
 
       if(!this.selectedAPM){
-        const merchantData: any = await this.liteCheckout.getBusiness();
 
-        const { vault_id, vault_url } = merchantData;
-
-        const skyflowFields = {
-          card_number: this.paymentForm.value.cardNumber,
-          cvv: this.paymentForm.value.cvv,
-          expiration_month: this.paymentForm.value.month,
-          expiration_year: this.paymentForm.value.expirationYear,
-          cardholder_name: this.paymentForm.value.name
+        const cardFields = {
+          card_number: this.paymentForm.value.cardNumber!,
+          cvv: this.paymentForm.value.cvv!,
+          expiration_month: this.paymentForm.value.month!,
+          expiration_year: this.paymentForm.value.expirationYear!,
+          cardholder_name: this.paymentForm.value.name!
         }
 
-        const skyflowTokens = await this.liteCheckout.getSkyflowTokens({
-          vault_id: vault_id,
-          vault_url: vault_url,
-          data: skyflowFields
-        })
-
-       checkoutData.skyflowTokens = skyflowTokens;
+       checkoutData = {...checkoutData, card: cardFields };
       }
 
-      const jsonResponseRouter: any = await this.liteCheckout.startCheckoutRouterFull(
+      const jsonResponseRouter: any = await this.liteCheckout.payment(
         checkoutData
       );
 
@@ -123,13 +109,19 @@ export class FullCheckoutContainerComponent {
     this.liteCheckout = new LiteCheckout({
       baseUrlTonder: this.baseUrl,
       signal: this.abortController.signal,
-      apiKey: this.apiKey
+      apiKey: this.apiKey,
+      callBack: (response: any) => {
+       console.log('Checkout response', response);
+      },
+      customization: {
+         redirectOnComplete: false
+      }
     })
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
       console.log('Verify 3ds response', response)
     })
     // Metodo para obtener APMs
-    this.activeAPMs = await this.liteCheckout.getActiveAPMs();
+    this.activeAPMs = await this.liteCheckout.getCustomerPaymentMethods();
   }
 
 }
