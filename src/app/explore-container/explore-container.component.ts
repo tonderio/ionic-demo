@@ -41,12 +41,12 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     fetch("https://stage.tonder.io/api/secure-token/", {
       method: 'POST',
       headers: {
-        'Authorization': `Token 49a70935cca8e84fd23f978c526af6e722d7499b`,
+        'Authorization': `Token 197967d431010dc1a129e3f726cb5fd27987da92`,
         'Content-Type': 'application/json'
       },
     }).then(response => {
       response.json().then(result => {
-        const apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
+        const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27"
         const returnUrl = "http://localhost:8100/tabs/tab2"
         this.inlineCheckout?.removeCheckout()
         this.inlineCheckout = new InlineCheckout({
