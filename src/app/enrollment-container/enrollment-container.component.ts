@@ -35,13 +35,14 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
 
   async initCheckout(renderButton: boolean = false) {
 
-    const secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
-    const apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
+    const secretApiKey = "197967d431010dc1a129e3f726cb5fd27987da92";
+    const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27"
     const returnUrl = "http://localhost:8100/tabs/tab2"
     this.inlineCheckout?.removeCheckout()
     this.inlineCheckout = new InlineCheckout({
       apiKey: apiKey,
       returnUrl: returnUrl,
+      mode: "stage",
       renderPaymentButton: false,
       renderSaveCardButton: !renderButton,
       isEnrollmentCard: true,
