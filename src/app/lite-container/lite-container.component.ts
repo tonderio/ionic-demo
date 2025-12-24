@@ -14,9 +14,8 @@ export class LiteContainerComponent {
   @Input() errorMessage?: string;
   liteCheckout?: any;
   abortController = new AbortController();
-  secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
-  apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
-  baseUrl = "https://stage.tonder.io";
+  secretApiKey = "197967d431010dc1a129e3f726cb5fd27987da92";
+  apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27"
   returnUrl = "http://localhost:8100/tabs/tab3";
   paymentForm = new FormGroup({
     name: new FormControl('Pedro Paramo'),
@@ -42,7 +41,8 @@ export class LiteContainerComponent {
         expiration_year: this.paymentForm.value.expirationYear,
         cardholder_name: this.paymentForm.value.name
       }
-      this.liteCheckout.payment({...this.customerData, card: cardFields})
+      const response = await this.liteCheckout.payment({...this.customerData, card: cardFields})
+      alert('Payment status: ' + response?.transaction_status);
     } catch (error: any) {
       this.errorMessage = error.message;
       const timeout = setTimeout(() => {
@@ -87,8 +87,7 @@ export class LiteContainerComponent {
   }
   async initCheckout() {
     this.liteCheckout = new LiteCheckout({
-      baseUrlTonder: this.baseUrl,
-      signal: this.abortController.signal,
+      mode: "stage",  
       apiKey: this.apiKey,
       callBack: (response: any) => {
        console.log('Checkout response', response);
@@ -97,9 +96,17 @@ export class LiteContainerComponent {
          redirectOnComplete: false
       }
     })
-
+    const secureTokenResponse = await fetch("https://stage.tonder.io/api/secure-token/", {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token 197967d431010dc1a129e3f726cb5fd27987da92`,
+        'Content-Type': 'application/json'
+      },
+    })
+    const result =  await secureTokenResponse.json();
     this.liteCheckout.configureCheckout({
       ...this.customerData,
+      secureToken: result.access
     });
 
     this.liteCheckout.verify3dsTransaction().then((response: any) => {
