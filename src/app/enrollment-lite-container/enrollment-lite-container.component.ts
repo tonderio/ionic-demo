@@ -32,7 +32,6 @@ export class EnrollmentLiteContainerComponent {
 
       const secretApiKey = "197967d431010dc1a129e3f726cb5fd27987da92";
       const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
-      const baseUrl = "https://stage.tonder.io";
       const abortController = new AbortController();
 
       let checkoutData = {
@@ -53,15 +52,22 @@ export class EnrollmentLiteContainerComponent {
       }
 
       const liteCheckout = new LiteCheckout({
-        baseUrlTonder: baseUrl,
+        mode: "stage",
         signal: abortController.signal,
         apiKey: apiKey
       })
-      const secureToken = await liteCheckout.getSecureToken(secretApiKey)
+    const secureTokenResponse = await fetch("https://stage.tonder.io/api/secure-token/", {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${secretApiKey}`,
+        'Content-Type': 'application/json'
+      },
+    })
+    const result =  await secureTokenResponse.json();
 
       liteCheckout.configureCheckout({
         customer: checkoutData.customer,
-        secureToken: secureToken?.access
+        secureToken: result?.access
       });
 
       const skyflowFields: ISaveCardRequest = {
