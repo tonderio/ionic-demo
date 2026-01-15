@@ -20,7 +20,7 @@
               <div class="card-number">•••• •••• •••• {{ card.fields.card_number.slice(-4) }}</div>
               <div class="card-expiry">Expira: {{ card.fields.expiration_month }}/{{ card.fields.expiration_year }}</div>
             </div>
-            <div *ngIf="selectedCardId === card.fields.skyflow_id" class="cvv-section" (click)="$event.stopPropagation()">
+            <div *ngIf="selectedCardId === card.fields.skyflow_id && !card.fields.subscription_id" class="cvv-section" (click)="$event.stopPropagation()">
               <div [id]="'collect_cvv_' + card.fields.skyflow_id" style="overflow: hidden"></div>
             </div>
           </div>
