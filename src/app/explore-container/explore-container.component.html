@@ -19,6 +19,14 @@
           <label for="secretKey">Secret Key: </label>
           <input id="secretKey" type="text" [(ngModel)]="secretKey" (change)="initCheckout()">
         </div>
+        <div class="key-input">
+          <label for="amount">Amount: </label>
+          <input id="amount" type="number" [(ngModel)]="amount" (change)="ngOnInit()">
+        </div>
+        <div class="key-input">
+          <label for="currency">Currency: </label>
+          <input id="currency" type="text" [(ngModel)]="currency" (change)="ngOnInit()">
+        </div>
       </div>
     </details>
   </div>
