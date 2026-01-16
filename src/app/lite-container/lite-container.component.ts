@@ -17,6 +17,8 @@ export class LiteContainerComponent {
   secretApiKey = "197967d431010dc1a129e3f726cb5fd27987da92";
   apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
   mode: "development" | "stage" | "production" = "stage";
+  amount: number = 100;
+  currency: string = "MXN";
   returnUrl = `${window.location.origin}/tabs/tab3`;
   paymentForm = new FormGroup({
     name: new FormControl('Pedro Paramo'),
@@ -68,21 +70,21 @@ export class LiteContainerComponent {
         phone: "+58 4169855522"
       },
       cart: {
-        total: 120,
+        total: this.amount,
         items: [
           {
             description: "Test product description",
             quantity: 1,
-            price_unit: 120,
-            discount: 25,
-            taxes: 12,
-            product_reference: 12,
+            price_unit: this.amount,
+            discount: 0,
+            taxes: 0,
+            product_reference: 1,
             name: "Test product",
-            amount_total: 120
+            amount_total: this.amount
           }
         ]
       },
-      currency: "MXN"
+      currency: this.currency
     }
     this.initCheckout()
   }
