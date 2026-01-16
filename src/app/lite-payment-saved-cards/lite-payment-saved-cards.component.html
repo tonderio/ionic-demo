@@ -6,7 +6,7 @@
     <div class="api-keys-section">
       <div class="key-input">
         <label for="mode">Mode: </label>
-        <select id="mode" [(ngModel)]="mode" (change)="initializeTonderSDK()">
+        <select id="mode" [(ngModel)]="mode">
           <option value="development">development</option>
           <option value="stage">stage</option>
           <option value="production">production</option>
@@ -14,20 +14,25 @@
       </div>
       <div class="key-input">
         <label for="apiKey">Public Key: </label>
-        <input id="apiKey" type="text" [(ngModel)]="apiKey" (change)="initializeTonderSDK()">
+        <input id="apiKey" type="text" [(ngModel)]="apiKey">
       </div>
       <div class="key-input">
         <label for="secretApiKey">Secret Key: </label>
-        <input id="secretApiKey" type="text" [(ngModel)]="secretApiKey" (change)="initializeTonderSDK()">
+        <input id="secretApiKey" type="text" [(ngModel)]="secretApiKey">
       </div>
       <div class="key-input">
         <label for="amount">Amount: </label>
-        <input id="amount" type="number" [(ngModel)]="amount" (change)="updateCustomerData(); initializeTonderSDK()">
+        <input id="amount" type="number" [(ngModel)]="amount">
       </div>
       <div class="key-input">
         <label for="currency">Currency: </label>
-        <input id="currency" type="text" [(ngModel)]="currency" (change)="updateCustomerData(); initializeTonderSDK()">
+        <input id="currency" type="text" [(ngModel)]="currency">
       </div>
+      <div class="key-input">
+        <label for="email">Email: </label>
+        <input id="email" type="email" [(ngModel)]="email">
+      </div>
+      <button class="refresh-btn" (click)="updateCustomerData(); initializeTonderSDK()">Refresh</button>
     </div>
   </details>
   </div>

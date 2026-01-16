@@ -5,7 +5,7 @@
       <div class="api-keys-section">
         <div class="key-input">
           <label for="mode">Mode: </label>
-          <select id="mode" [(ngModel)]="mode" (change)="initCheckout()">
+          <select id="mode" [(ngModel)]="mode">
             <option value="development">development</option>
             <option value="stage">stage</option>
             <option value="production">production</option>
@@ -13,20 +13,25 @@
         </div>
         <div class="key-input">
           <label for="publicKey">Public Key: </label>
-          <input id="publicKey" type="text" [(ngModel)]="publicKey" (change)="initCheckout()">
+          <input id="publicKey" type="text" [(ngModel)]="publicKey">
         </div>
         <div class="key-input">
           <label for="secretKey">Secret Key: </label>
-          <input id="secretKey" type="text" [(ngModel)]="secretKey" (change)="initCheckout()">
+          <input id="secretKey" type="text" [(ngModel)]="secretKey">
         </div>
         <div class="key-input">
           <label for="amount">Amount: </label>
-          <input id="amount" type="number" [(ngModel)]="amount" (change)="ngOnInit()">
+          <input id="amount" type="number" [(ngModel)]="amount">
         </div>
         <div class="key-input">
           <label for="currency">Currency: </label>
-          <input id="currency" type="text" [(ngModel)]="currency" (change)="ngOnInit()">
+          <input id="currency" type="text" [(ngModel)]="currency">
         </div>
+        <div class="key-input">
+          <label for="email">Email: </label>
+          <input id="email" type="email" [(ngModel)]="email">
+        </div>
+        <button class="refresh-btn" (click)="ngOnInit()">Refresh</button>
       </div>
     </details>
   </div>
