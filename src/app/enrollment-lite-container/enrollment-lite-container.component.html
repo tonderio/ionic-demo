@@ -1,7 +1,28 @@
 <div id="container">
-  
+  <details class="api-keys-accordion">
+    <summary>Configuración API</summary>
+    <div class="api-keys-section">
+      <div class="key-input">
+        <label for="mode">Mode: </label>
+        <select id="mode" [(ngModel)]="mode">
+          <option value="development">development</option>
+          <option value="stage">stage</option>
+          <option value="production">production</option>
+        </select>
+      </div>
+      <div class="key-input">
+        <label for="apiKey">Public Key: </label>
+        <input id="apiKey" type="text" [(ngModel)]="apiKey">
+      </div>
+      <div class="key-input">
+        <label for="secretApiKey">Secret Key: </label>
+        <input id="secretApiKey" type="text" [(ngModel)]="secretApiKey">
+      </div>
+    </div>
+  </details>
+
   <form [formGroup]="paymentForm">
-    
+
     <div class="lite-container-tonder">
 
       <div id="id-name" class="empty-div">

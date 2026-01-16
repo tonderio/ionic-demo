@@ -25,6 +25,10 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   secureToken: string | null;
 
+  publicKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+  secretKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
+  mode: "development" | "stage" | "production" = "stage";
+
   constructor(public platform: Platform) {
     this.externalButton = false;
     this.customerData = null;
@@ -41,16 +45,16 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     fetch("https://stage.tonder.io/api/secure-token/", {
       method: 'POST',
       headers: {
-        'Authorization': `Token 197967d431010dc1a129e3f726cb5fd27987da92`,
+        'Authorization': `Token ${this.secretKey}`,
         'Content-Type': 'application/json'
       },
     }).then(response => {
       response.json().then(result => {
-        const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27"
-        const returnUrl = "http://localhost:8100/tabs/tab2"
+        const apiKey = this.publicKey
+        const returnUrl = `${window.location.origin}/tabs/tab2`
         this.inlineCheckout?.removeCheckout()
         this.inlineCheckout = new InlineCheckout({
-          mode: "stage",
+          mode: this.mode,
           apiKey: apiKey,
           returnUrl: returnUrl,
           renderPaymentButton: !renderButton,

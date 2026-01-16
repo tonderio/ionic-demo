@@ -21,7 +21,7 @@ export class FullCheckoutContainerComponent {
   secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
   apiKey = "e0097a032daa0dcf090ce86c2d7c62e0110cde43"
   baseUrl = "https://stage.tonder.io";
-  returnUrl = "http://localhost:8100/tabs/tab5";
+  returnUrl = `${window.location.origin}/tabs/tab5`;
   selectedAPM: APM | null = null;
   activeAPMs: APM[] = []
   paymentForm = new FormGroup({

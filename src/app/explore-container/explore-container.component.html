@@ -1,4 +1,27 @@
 <div id="container">
+  <div class="api-config">
+    <details class="api-keys-accordion">
+      <summary>Configuración API</summary>
+      <div class="api-keys-section">
+        <div class="key-input">
+          <label for="mode">Mode: </label>
+          <select id="mode" [(ngModel)]="mode" (change)="initCheckout()">
+            <option value="development">development</option>
+            <option value="stage">stage</option>
+            <option value="production">production</option>
+          </select>
+        </div>
+        <div class="key-input">
+          <label for="publicKey">Public Key: </label>
+          <input id="publicKey" type="text" [(ngModel)]="publicKey" (change)="initCheckout()">
+        </div>
+        <div class="key-input">
+          <label for="secretKey">Secret Key: </label>
+          <input id="secretKey" type="text" [(ngModel)]="secretKey" (change)="initCheckout()">
+        </div>
+      </div>
+    </details>
+  </div>
   <form id="payment-form">
     <div id="tonder-checkout"></div>
   </form>
