@@ -14,6 +14,10 @@ export class LitePaymentSavedCardsComponent implements OnInit {
   errorMessage: string = '';
   accessToken: string = '';
 
+  apiKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+  secretApiKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
+  mode: "development" | "stage" | "production" = "stage";
+
   customerData = {
     customer: {
       firstName: 'Pedro',
@@ -53,8 +57,8 @@ export class LitePaymentSavedCardsComponent implements OnInit {
 
   async initializeTonderSDK() {
     this.liteCheckout = new LiteCheckout({
-      mode: 'stage',
-      apiKey: '11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27',
+      mode: this.mode,
+      apiKey: this.apiKey,
       returnUrl: window.location.href,
       customization: {
         redirectOnComplete: false
@@ -72,7 +76,7 @@ export class LitePaymentSavedCardsComponent implements OnInit {
       method: 'POST',
       headers: {
         // not expose your secret token in frontend code
-        'Authorization': `Token 197967d431010dc1a129e3f726cb5fd27987da92`,
+        'Authorization': `Token ${this.secretApiKey}`,
         'Content-Type': 'application/json'
       },
     });

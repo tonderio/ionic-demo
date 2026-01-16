@@ -16,6 +16,10 @@ export class EnrollmentLiteContainerComponent {
   @Input() name?: string;
   @Input() errorMessage?: string;
 
+  apiKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+  secretApiKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
+  mode: "development" | "stage" | "production" = "stage";
+
   paymentForm = new FormGroup({
     name: new FormControl('Pedro Paramo'),
     cardNumber: new FormControl('4242424242424242'),
@@ -30,8 +34,6 @@ export class EnrollmentLiteContainerComponent {
 
     try {
 
-      const secretApiKey = "197967d431010dc1a129e3f726cb5fd27987da92";
-      const apiKey = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
       const abortController = new AbortController();
 
       let checkoutData = {
@@ -52,14 +54,14 @@ export class EnrollmentLiteContainerComponent {
       }
 
       const liteCheckout = new LiteCheckout({
-        mode: "stage",
+        mode: this.mode,
         signal: abortController.signal,
-        apiKey: apiKey
+        apiKey: this.apiKey
       })
     const secureTokenResponse = await fetch("https://stage.tonder.io/api/secure-token/", {
       method: 'POST',
       headers: {
-        'Authorization': `Token ${secretApiKey}`,
+        'Authorization': `Token ${this.secretApiKey}`,
         'Content-Type': 'application/json'
       },
     })

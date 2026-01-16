@@ -24,6 +24,10 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
 
   customerData: any;
 
+  apiKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
+  secretApiKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
+  mode: "development" | "stage" | "production" = "stage";
+
   constructor(public platform: Platform, private messageService: MessageService, private router: Router) {
     this.externalButton = false;
     this.customerData = null;
@@ -35,14 +39,12 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
 
   async initCheckout(renderButton: boolean = false) {
 
-    const secretApiKey = "5ec08a1746b860e50256021c5f11d75ec897e158";
-    const apiKey = "4c8341f8e93faa8ef48416acb132f041aa939316"
-    const returnUrl = "http://localhost:8100/tabs/tab2"
+    const returnUrl = `${window.location.origin}/tabs/tab2`
     this.inlineCheckout?.removeCheckout()
     this.inlineCheckout = new InlineCheckout({
-      apiKey: apiKey,
+      apiKey: this.apiKey,
       returnUrl: returnUrl,
-      mode: "stage",
+      mode: this.mode,
       renderPaymentButton: false,
       renderSaveCardButton: !renderButton,
       isEnrollmentCard: true,
@@ -89,7 +91,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
         this.inlineCheckout?.removeCheckout()
       },
     });
-    const secureToken = await this.inlineCheckout.getSecureToken(secretApiKey)
+    const secureToken = await this.inlineCheckout.getSecureToken(this.secretApiKey)
     this.inlineCheckout.configureCheckout({customer: this.customerData?.customer, secureToken: secureToken?.access});
     this.inlineCheckout.injectCheckout();
   }

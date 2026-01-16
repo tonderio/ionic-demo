@@ -1,5 +1,28 @@
 <div class="container">
   <iframe class="tds-iframe" allowTransparency="true" id="tdsIframe"></iframe>
+  <div>
+      <details class="api-keys-accordion">
+    <summary>Configuración API</summary>
+    <div class="api-keys-section">
+      <div class="key-input">
+        <label for="mode">Mode: </label>
+        <select id="mode" [(ngModel)]="mode" (change)="initializeTonderSDK()">
+          <option value="development">development</option>
+          <option value="stage">stage</option>
+          <option value="production">production</option>
+        </select>
+      </div>
+      <div class="key-input">
+        <label for="apiKey">Public Key: </label>
+        <input id="apiKey" type="text" [(ngModel)]="apiKey" (change)="initializeTonderSDK()">
+      </div>
+      <div class="key-input">
+        <label for="secretApiKey">Secret Key: </label>
+        <input id="secretApiKey" type="text" [(ngModel)]="secretApiKey" (change)="initializeTonderSDK()">
+      </div>
+    </div>
+  </details>
+  </div>
   <ng-container *ngIf="loading">
     <div class="loading-message">
       <div class="loading-title">Cargando checkout...</div>
