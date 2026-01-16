@@ -30,6 +30,11 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
   mode: "development" | "stage" | "production" = "stage";
   amount: number = 100;
   currency: string = "MXN";
+  email: string = "test@example.com";
+
+  get baseUrl(): string {
+    return this.mode === "production" ? "https://app.tonder.io" : "https://stage.tonder.io";
+  }
 
   constructor(public platform: Platform) {
     this.externalButton = false;
@@ -44,7 +49,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   initCheckout(renderButton?: boolean) {
 
-    fetch("https://stage.tonder.io/api/secure-token/", {
+    fetch(`${this.baseUrl}/api/secure-token/`, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${this.secretKey}`,
@@ -137,7 +142,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         city: "The city",
         state: "The state",
         postCode: "98746",
-        email: "sergioh81@gmail.com",
+        email: this.email,
         phone: "+58 4169855522"
       },
       cart: {

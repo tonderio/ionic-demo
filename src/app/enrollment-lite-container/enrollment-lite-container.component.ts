@@ -19,6 +19,11 @@ export class EnrollmentLiteContainerComponent {
   apiKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
   secretApiKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
   mode: "development" | "stage" | "production" = "stage";
+  email: string = "test@example.com";
+
+  get baseUrl(): string {
+    return this.mode === "production" ? "https://app.tonder.io" : "https://stage.tonder.io";
+  }
 
   paymentForm = new FormGroup({
     name: new FormControl('Pedro Paramo'),
@@ -40,7 +45,7 @@ export class EnrollmentLiteContainerComponent {
         customer: {
           name: "Jhon",
           lastname: "Doe",
-          email: "test@example.com",
+          email: this.email,
           phone: "+58452258525"
         },
         skyflowTokens: {
@@ -58,7 +63,7 @@ export class EnrollmentLiteContainerComponent {
         signal: abortController.signal,
         apiKey: this.apiKey
       })
-    const secureTokenResponse = await fetch("https://stage.tonder.io/api/secure-token/", {
+    const secureTokenResponse = await fetch(`${this.baseUrl}/api/secure-token/`, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${this.secretApiKey}`,

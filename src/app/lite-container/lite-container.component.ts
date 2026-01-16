@@ -19,7 +19,12 @@ export class LiteContainerComponent {
   mode: "development" | "stage" | "production" = "stage";
   amount: number = 100;
   currency: string = "MXN";
+  email: string = "test@example.com";
   returnUrl = `${window.location.origin}/tabs/tab3`;
+
+  get baseUrl(): string {
+    return this.mode === "production" ? "https://app.tonder.io" : "https://stage.tonder.io";
+  }
   paymentForm = new FormGroup({
     name: new FormControl('Pedro Paramo'),
     cardNumber: new FormControl('4242424242424242'),
@@ -66,7 +71,7 @@ export class LiteContainerComponent {
         city: "The city",
         state: "The state",
         postCode: "98746",
-        email: "dav@gmail.com",
+        email: this.email,
         phone: "+58 4169855522"
       },
       cart: {
@@ -99,7 +104,7 @@ export class LiteContainerComponent {
          redirectOnComplete: false
       }
     })
-    const secureTokenResponse = await fetch("https://stage.tonder.io/api/secure-token/", {
+    const secureTokenResponse = await fetch(`${this.baseUrl}/api/secure-token/`, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${this.secretApiKey}`,

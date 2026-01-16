@@ -19,6 +19,11 @@ export class LitePaymentSavedCardsComponent implements OnInit {
   mode: "development" | "stage" | "production" = "stage";
   amount: number = 100;
   currency: string = "MXN";
+  email: string = "test@example.com";
+
+  get baseUrl(): string {
+    return this.mode === "production" ? "https://app.tonder.io" : "https://stage.tonder.io";
+  }
 
   customerData: any = {}
 
@@ -36,7 +41,7 @@ export class LitePaymentSavedCardsComponent implements OnInit {
       city: 'The city',
       state: 'The state',
       postCode: '98746',
-      email: 'test@example.com',
+      email: this.email,
       phone: '+58 4169855522'
     },
     cart: {
@@ -82,7 +87,7 @@ export class LitePaymentSavedCardsComponent implements OnInit {
       }
     });
     // get a secure token from your backend
-    const accessTokenResponse = await fetch('https://stage.tonder.io/api/secure-token/', {
+    const accessTokenResponse = await fetch(`${this.baseUrl}/api/secure-token/`, {
       method: 'POST',
       headers: {
         // not expose your secret token in frontend code

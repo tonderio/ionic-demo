@@ -27,6 +27,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
   apiKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
   secretApiKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
   mode: "development" | "stage" | "production" = "stage";
+  email: string = "test@example.com";
 
   constructor(public platform: Platform, private messageService: MessageService, private router: Router) {
     this.externalButton = false;
@@ -111,7 +112,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
         city: "The city",
         state: "The state",
         postCode: "98746",
-        email: "jhon.doe@example.com",
+        email: this.email,
         phone: "+58 4169855522"
       }
     }
