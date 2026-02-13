@@ -20,6 +20,7 @@ export class LitePaymentSavedCardsComponent implements OnInit {
   amount: number = 100;
   currency: string = "MXN";
   email: string = "test@example.com";
+  metadataJson: string = "";
 
   get baseUrl(): string {
     return this.mode === "production" ? "https://app.tonder.io" : "https://stage.tonder.io";
@@ -120,7 +121,21 @@ export class LitePaymentSavedCardsComponent implements OnInit {
   async handlePayment() {
     if (!this.selectedCardId) return;
     try {
-      const response = await this.liteCheckout.payment({ ...this.customerData, card: this.selectedCardId });
+      let paymentData: any = { ...this.customerData, card: this.selectedCardId };
+
+      // Parse and add metadata if provided
+      if (this.metadataJson.trim()) {
+        try {
+          const metadata = JSON.parse(this.metadataJson);
+          paymentData.metadata = metadata;
+        } catch (e) {
+          this.errorMessage = "Invalid JSON format for metadata";
+          setTimeout(() => { this.errorMessage = ''; }, 5000);
+          return;
+        }
+      }
+
+      const response = await this.liteCheckout.payment(paymentData);
     } catch (err: any) {
       console.error('Payment error:', err);
       this.errorMessage = err.message || 'Error en el pago';

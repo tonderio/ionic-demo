@@ -20,6 +20,7 @@ export class LiteContainerComponent {
   amount: number = 100;
   currency: string = "MXN";
   email: string = "test@example.com";
+  metadataJson: string = "";
   returnUrl = `${window.location.origin}/tabs/tab3`;
 
   get baseUrl(): string {
@@ -49,9 +50,29 @@ export class LiteContainerComponent {
         expiration_year: this.paymentForm.value.expirationYear,
         cardholder_name: this.paymentForm.value.name
       }
-      const response = await this.liteCheckout.payment({...this.customerData, card: cardFields})
+
+      let paymentData: any = {...this.customerData, card: cardFields};
+
+      // Parse and add metadata if provided
+      if (this.metadataJson.trim()) {
+        try {
+          const metadata = JSON.parse(this.metadataJson);
+          paymentData.metadata = metadata;
+        } catch (e) {
+          this.errorMessage = "Invalid JSON format for metadata";
+          const timeout = setTimeout(() => {
+            this.errorMessage = "";
+            clearTimeout(timeout);
+          }, 5000)
+          return;
+        }
+      }
+
+      const response = await this.liteCheckout.payment(paymentData)
       alert('Payment status: ' + response?.transaction_status);
     } catch (error: any) {
+            console.log("error====", error.message,'-', error.code,'-', error.status,'-', error.statusCode,'-', error.details)
+
       this.errorMessage = error.message;
       const timeout = setTimeout(() => {
         this.errorMessage = "";

@@ -31,6 +31,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
   amount: number = 100;
   currency: string = "MXN";
   email: string = "test@example.com";
+  metadataJson: string = "";
 
   get baseUrl(): string {
     return this.mode === "production" ? "https://app.tonder.io" : "https://stage.tonder.io";
@@ -109,10 +110,23 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         });
         // this.inlineCheckout.setPaymentData(this.customerData)
         // this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
-        this.inlineCheckout.configureCheckout({
+
+        let configData: any = {
           ...this.customerData,
           secureToken: result?.access
-        });
+        };
+
+        // Parse and add metadata if provided
+        if (this.metadataJson.trim()) {
+          try {
+            const metadata = JSON.parse(this.metadataJson);
+            configData.metadata = metadata;
+          } catch (e) {
+            console.error("Invalid JSON format for metadata:", e);
+          }
+        }
+
+        this.inlineCheckout.configureCheckout(configData);
         this.inlineCheckout.injectCheckout();
         this.inlineCheckout.verify3dsTransaction().then((response: any) => {
           console.log('Verify 3ds response', response)

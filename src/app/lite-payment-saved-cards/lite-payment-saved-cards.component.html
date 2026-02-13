@@ -4,6 +4,10 @@
       <details class="api-keys-accordion">
     <summary>Configuración API</summary>
     <div class="api-keys-section">
+      <div style="background-color: #ffebee; border-left: 4px solid #f44336; padding: 12px; margin-bottom: 16px; border-radius: 4px;">
+        <strong style="color: #c62828;">⚠️ Importante:</strong>
+        <span style="color: #d32f2f;"> Si cambias alguna configuración, presiona el botón "Refresh" para aplicar los cambios.</span>
+      </div>
       <div class="key-input">
         <label for="mode">Mode: </label>
         <select id="mode" [(ngModel)]="mode">
@@ -31,6 +35,10 @@
       <div class="key-input">
         <label for="email">Email: </label>
         <input id="email" type="email" [(ngModel)]="email">
+      </div>
+      <div class="key-input">
+        <label for="metadata">Metadata (JSON): </label>
+        <textarea id="metadata" name="metadataJson" rows="4" [(ngModel)]="metadataJson" placeholder='{"key": "value"}'></textarea>
       </div>
       <button class="refresh-btn" (click)="updateCustomerData(); initializeTonderSDK()">Refresh</button>
     </div>
