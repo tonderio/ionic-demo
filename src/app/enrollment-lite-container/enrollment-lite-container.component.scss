@@ -1,187 +1,82 @@
-#container {
-  text-align: center;
+// ─── Layout ───────────────────────────────────────────────────────────────────
 
+#container {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.api-keys-accordion {
-  margin: 10px auto;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background: #f9f9f9;
-  max-width: 600px;
-
-  summary {
-    padding: 12px 16px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
-    color: #333;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    &::before {
-      content: '▶';
-      font-size: 10px;
-      transition: transform 0.2s;
-    }
-  }
-
-  &[open] summary::before {
-    transform: rotate(90deg);
-  }
-}
-
-.api-keys-section {
-  padding: 10px 16px 16px;
-
-  .key-input {
-    margin-bottom: 10px;
-    text-align: left;
-
-    label {
-      display: block;
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 4px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 12px;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+  text-align: center;
 }
 
 .lite-container-tonder {
-  margin: 0 auto !important;
-  padding: 30px 10px 30px 10px;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out;
   max-width: 600px;
-  border: solid 1px #e3e3e3;
-  max-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 16px;
+  border: 1px solid #e3e3e3;
 }
 
-.collect-row {
-  display: flex !important;
-  justify-content: space-between !important;
-  width: 100% !important;
-}
+// ─── Buttons ──────────────────────────────────────────────────────────────────
 
-.collect-row > :first-child {
-  min-width: 120px !important; 
-}
-
-.expiration-year {
-  padding-top: 2px !important;
-  & input {
-    width: 100%;
-  }
-}
-
-.empty-div {
-  height: 80px !important;
-  margin-top: 2px;
-  margin-bottom: 4px;
-  margin-left: 10px !important;
-  margin-right: 10px !important;
-  text-align: left !important;
-  & input {
-    width: 100%;
-  }
-}
-
-.error-container{
-  color: red !important;
-  background-color: #FFDBDB !important;
-  margin-bottom: 13px !important;
-  font-size: 80% !important;
-  padding: 8px 10px !important;
-  border-radius: 10px !important;
-  text-align: left !important;
-}
-
-.lite-pay-button {
-  font-size: 16px;
-  font-weight: bold;
-  min-height: 2.3rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
+.btn-primary {
   width: 100%;
   padding: 1rem;
-  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
   border: none;
-  background-color: white;
-  color: black;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: #1a1a2e;
+  color: white;
+  margin-bottom: 10px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:active   { background-color: #16213e; }
+  &:disabled { opacity: 0.7; cursor: not-allowed; }
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 1rem;
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid #1a1a2e;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  color: #1a1a2e;
   margin-bottom: 10px;
 }
 
-.lds-dual-ring {
-  display: inline-block;
+.btn-spinner {
   width: 14px;
   height: 14px;
-}
-
-.lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 14px;
-  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
   border-radius: 50%;
-  border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
 }
 
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-@media screen and (max-width: 600px) {
-  .payment_method_zplit {
-    font-size: 16px !important;
-    width: 100% !important;
-  }
+// ─── Form ─────────────────────────────────────────────────────────────────────
 
-  .payment_method_zplit  label img {
-    display: none !important;
-  }
+.collect-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.error-message {
+  color: #c62828;
+  font-size: 13px;
+  text-align: left;
+  margin-bottom: 10px;
 }

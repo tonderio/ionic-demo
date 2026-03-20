@@ -76,7 +76,7 @@ export class FullCheckoutContainerComponent {
           cardholder_name: this.paymentForm.value.name!
         }
 
-       checkoutData = {...checkoutData, card: cardFields };
+       checkoutData = {...checkoutData };
       }
 
       const jsonResponseRouter: any = await this.liteCheckout.payment(

@@ -1,68 +1,45 @@
 <div id="container">
-  <details class="api-keys-accordion">
-    <summary>Configuración API</summary>
-    <div class="api-keys-section">
-      <div style="background-color: #ffebee; border-left: 4px solid #f44336; padding: 12px; margin-bottom: 16px; border-radius: 4px;">
-        <strong style="color: #c62828;">⚠️ Importante:</strong>
-        <span style="color: #d32f2f;"> Si cambias alguna configuración, presiona el botón "Refresh" para aplicar los cambios.</span>
-      </div>
-      <div class="key-input">
-        <label for="mode">Mode: </label>
-        <select id="mode" [(ngModel)]="mode">
-          <option value="development">development</option>
-          <option value="stage">stage</option>
-          <option value="production">production</option>
-        </select>
-      </div>
-      <div class="key-input">
-        <label for="apiKey">Public Key: </label>
-        <input id="apiKey" type="text" [(ngModel)]="apiKey">
-      </div>
-      <div class="key-input">
-        <label for="secretApiKey">Secret Key: </label>
-        <input id="secretApiKey" type="text" [(ngModel)]="secretApiKey">
-      </div>
-      <div class="key-input">
-        <label for="email">Email: </label>
-        <input id="email" type="email" [(ngModel)]="email">
-      </div>
-    </div>
-  </details>
 
-  <form [formGroup]="paymentForm">
+  <!-- Demo configuration — collapsed by default, does not affect SDK logic -->
+  <app-demo-config [config]="config"  [showPaymentFields]="true" [showRefresh]="true" (refresh)="ngOnInit()"></app-demo-config>
 
-    <div class="lite-container-tonder">
+  <div class="lite-container-tonder">
 
-      <div id="id-name" class="empty-div">
-        <label for="name">Name: </label>
-        <input id="name" type="text" formControlName="name">
+    <!-- Card preview: live while typing, Reveal Elements after save -->
+    <app-card-preview
+      [cardPreview]="cardPreview"
+      [cardFieldState]="cardFieldState"
+      [cardSaved]="cardSaved">
+    </app-card-preview>
+
+    <!-- ── Skyflow Collect Fields ── -->
+    <ng-container *ngIf="!cardSaved">
+      <div style="max-height: 70px; overflow: hidden">
+        <div id="collect_enroll_cardholder_name"></div>
       </div>
-
-      <div id="id-cardNumber" class="empty-div">
-        <label for="cardNumber">Card number: </label>
-        <input id="cardNumber" type="text" formControlName="cardNumber">
+      <div style="max-height: 80px; overflow: hidden">
+        <div id="collect_enroll_card_number"></div>
       </div>
-
       <div class="collect-row">
-        <div class="empty-div">
-          <label for="month">Month: </label>
-          <input id="month" type="text" formControlName="month">
+        <div style="max-height: 90px; overflow: hidden">
+          <div id="collect_enroll_expiration_month"></div>
         </div>
-        <div class="expiration-year">
-          <label for="expirationYear">Year: </label>
-          <input id="expirationYear" type="text" formControlName="expirationYear">
+        <div style="max-height: 90px; overflow: hidden">
+          <div id="collect_enroll_expiration_year"></div>
         </div>
-        <div class="empty-div">
-          <label for="cvv">CVV: </label>
-          <input id="cvv" type="text" formControlName="cvv">
+        <div style="max-height: 90px; overflow: hidden">
+          <div id="collect_enroll_cvv"></div>
         </div>
       </div>
-      
-      <div id="msgError">{{ errorMessage }}</div>
-      <div id="msgNotification"></div>
-      
-      <button class="lite-pay-button" (click)="onSave($event)">Guardar</button>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <button class="btn-primary" (click)="onSave()" [disabled]="isSaving">
+        <span *ngIf="isSaving" class="btn-spinner"></span>
+        {{ isSaving ? 'Guardando...' : 'Guardar tarjeta' }}
+      </button>
+    </ng-container>
 
-    </div>
-  
-  </form>
+    <button *ngIf="cardSaved" class="btn-secondary" (click)="reset()">Regresar</button>
+
+  </div>
+
+</div>
