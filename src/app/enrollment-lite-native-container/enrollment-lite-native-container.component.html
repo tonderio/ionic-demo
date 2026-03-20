@@ -1,32 +1,55 @@
 <ion-content [fullscreen]="true">
   <div class="enroll-container">
+
     <app-demo-config [config]="config" [showRefresh]="true" (refresh)="ngOnInit()"></app-demo-config>
 
-    <div class="card-fields-container">
-      <!-- Skyflow Elements will be injected here by mountCardFields() -->
-       <div style="max-height: 70px; overflow: hidden">
-        <div id="collect_native_cardholder_name" class="skyflow-field"></div>
-       </div>
-       <div style="max-height: 70px; overflow: hidden">
-         <div id="collect_native_card_number" class="skyflow-field"></div>
-       </div>
-      <div class="collect-row">
-        <div style="max-height: 70px; overflow: hidden">
-          <div id="collect_native_expiration_month" class="skyflow-field"></div>
-        </div>
-        <div style="max-height: 70px; overflow: hidden">
-           <div id="collect_native_expiration_year" class="skyflow-field"></div>
-        </div>
-        <div style="max-height: 70px; overflow: hidden">
-          <div id="collect_native_cvv" class="skyflow-field"></div>
+    <div class="card-form-box">
+      <h2 class="form-title">Save your card</h2>
+      <p class="form-subtitle">Secure fields — your data never touches this app</p>
+
+      <!-- Cardholder name -->
+      <div class="field-group">
+        <div style="max-height: 80px; overflow: hidden">
+          <div id="collect_native_cardholder_name"></div>
         </div>
       </div>
+
+      <!-- Card number (80px to accommodate card brand icon) -->
+      <div class="field-group">
+        <div style="max-height: 80px; overflow: hidden">
+          <div id="collect_native_card_number"></div>
+        </div>
+      </div>
+
+      <!-- Expiry month / Expiry year / CVV -->
+      <div class="collect-row">
+        <div class="field-group">
+          <div style="max-height: 80px; overflow: hidden">
+            <div id="collect_native_expiration_month"></div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div style="max-height: 80px; overflow: hidden">
+            <div id="collect_native_expiration_year"></div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div style="max-height: 80px; overflow: hidden">
+            <div id="collect_native_cvv"></div>
+          </div>
+        </div>
+      </div>
+
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+      <button
+        class="save-btn"
+        (click)="onSave()"
+        [disabled]="isSaving">
+        <span *ngIf="isSaving" class="btn-spinner"></span>
+        {{ isSaving ? 'Saving...' : 'Save card' }}
+      </button>
     </div>
 
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-
-    <ion-button color="primary" expand="block" (click)="onSave($event)">
-      Guardar tarjeta
-    </ion-button>
   </div>
 </ion-content>
