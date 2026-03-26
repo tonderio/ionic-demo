@@ -93,9 +93,7 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
       apiKey: apiKey,
       returnUrl: returnUrl,
       renderPaymentButton: true,
-      styles: this.customStyles,
       containerId: "tonder-checkout-theming",
-
       collectorIds: {
         cardNumber: "collectCardNumberTheming",
         cvv: "collectCvvTheming",
@@ -106,6 +104,9 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
         tonderPayButton: "tonderPayButtonTheming",
         cardsListContainer: "cardsListContainerTheming",
         msgNotification: "msgNotificationTheming"
+      },
+      customization: {
+        styles: this.customStyles,
       },
       callBack: (response) => {
         if(response?.next_action?.redirect_to_url?.url) {
