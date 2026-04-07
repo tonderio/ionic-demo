@@ -4,6 +4,7 @@ import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
 import { Platform } from '@ionic/angular';
 import { IProcessPaymentRequest } from '@tonder.io/ionic-full-sdk/dist/types/commons';
+import { DemoConfig } from '../components/demo-config/demo-config.component';
 
 @Component({
   selector: 'app-explore-container',
@@ -25,23 +26,25 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
 
   secureToken: string | null;
 
-  publicKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
-  secretKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
-  mode: "development" | "stage" | "production" = "stage";
-  amount: number = 100;
-  currency: string = "MXN";
-  email: string = "test@example.com";
-  metadataJson: string = "";
+  config: DemoConfig = {
+    mode: 'stage',
+    apiKey: '11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27',
+    secretApiKey: '197967d431010dc1a129e3f726cb5fd27987da92',
+    email: 'test@example.com',
+    amount: 100,
+    currency: 'MXN',
+    metadataJson: '',
+  };
 
   get baseUrl(): string {
-    return this.mode === "production" ? "https://app.tonder.io" : "https://stage.tonder.io";
+    return this.config.mode === 'production' ? 'https://app.tonder.io' : 'https://stage.tonder.io';
   }
 
   constructor(public platform: Platform) {
     this.externalButton = false;
     this.customerData = null;
     this.secureToken = null;
-    this.showLayer = false
+    this.showLayer = false;
   }
 
   onPayment(event: any) {
@@ -53,17 +56,16 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     fetch(`${this.baseUrl}/api/secure-token/`, {
       method: 'POST',
       headers: {
-        'Authorization': `Token ${this.secretKey}`,
+        'Authorization': `Token ${this.config.secretApiKey}`,
         'Content-Type': 'application/json'
       },
     }).then(response => {
       response.json().then(result => {
-        const apiKey = this.publicKey
         const returnUrl = `${window.location.origin}/tabs/tab2`
         this.inlineCheckout?.removeCheckout()
         this.inlineCheckout = new InlineCheckout({
-          mode: this.mode,
-          apiKey: apiKey,
+          mode: this.config.mode,
+          apiKey: this.config.apiKey,
           returnUrl: returnUrl,
           renderPaymentButton: !renderButton,
           callBack: (response: any) => {
@@ -72,9 +74,8 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
           isOpenPaySandbox: true,
           customization: {
             saveCards: {
-              showSaveCardOption: true, // Usar para mostrar/ocultar el checkbox de guardar tarjeta para futuros pagos
-              // autoSave: true,           // Usar para guardar automáticamente la tarjeta (sin necesidad de mostrar el checkbox)
-              showSaved: true           // Usar para mostrar/ocultar el listado de tarjetas guardadas
+              showSaveCardOption: true,
+              showSaved: true
             },
             paymentButton: {
               show: true,
@@ -108,8 +109,6 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
               }
           }
         });
-        // this.inlineCheckout.setPaymentData(this.customerData)
-        // this.inlineCheckout.setCartTotal(this.customerData?.cart.total);
 
         let configData: any = {
           ...this.customerData,
@@ -117,9 +116,9 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         };
 
         // Parse and add metadata if provided
-        if (this.metadataJson.trim()) {
+        if (this.config.metadataJson?.trim()) {
           try {
-            const metadata = JSON.parse(this.metadataJson);
+            const metadata = JSON.parse(this.config.metadataJson);
             configData.metadata = metadata;
           } catch (e) {
             console.error("Invalid JSON format for metadata:", e);
@@ -147,6 +146,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('Initializing checkout');
     this.customerData = {
       customer: {
         firstName: "Pedro",
@@ -156,25 +156,25 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
         city: "The city",
         state: "The state",
         postCode: "98746",
-        email: this.email,
+        email: this.config.email,
         phone: "+58 4169855522"
       },
       cart: {
-        total: this.amount,
+        total: this.config.amount ?? 100,
         items: [
           {
             description: "Test product description",
             quantity: 1,
-            price_unit: this.amount,
+            price_unit: this.config.amount ?? 100,
             discount: 0,
             taxes: 0,
             product_reference: 1,
             name: "Test product",
-            amount_total: this.amount
+            amount_total: this.config.amount ?? 100
           }
         ]
       },
-      currency: this.currency
+      currency: this.config.currency ?? 'MXN'
     }
     this.initCheckout()
   }

@@ -1,0 +1,53 @@
+<details class="demo-config-accordion">
+  <summary>Configuración API</summary>
+  <div class="demo-config-body">
+
+    <p class="demo-config-note">
+      ⚠️ Al cambiar cualquier valor{{ showRefresh ? ' presiona "Refresh"' : '' }} para reiniciar.
+    </p>
+
+    <div class="demo-config-field">
+      <label>Mode</label>
+      <select [(ngModel)]="config.mode">
+        <option value="development">development</option>
+        <option value="stage">stage</option>
+        <option value="production">production</option>
+      </select>
+    </div>
+
+    <div class="demo-config-field">
+      <label>Public Key</label>
+      <input type="text" [(ngModel)]="config.apiKey">
+    </div>
+
+    <div class="demo-config-field">
+      <label>Secret Key</label>
+      <input type="text" [(ngModel)]="config.secretApiKey">
+    </div>
+
+    <div class="demo-config-field">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="config.email">
+    </div>
+
+    <ng-container *ngIf="showPaymentFields">
+      <div class="demo-config-field">
+        <label>Amount</label>
+        <input type="number" [(ngModel)]="config.amount">
+      </div>
+      <div class="demo-config-field">
+        <label>Currency</label>
+        <input type="text" [(ngModel)]="config.currency">
+      </div>
+      <div class="demo-config-field">
+        <label>Metadata (JSON)</label>
+        <textarea rows="3" [(ngModel)]="config.metadataJson" placeholder='{"key": "value"}'></textarea>
+      </div>
+    </ng-container>
+
+    <button *ngIf="showRefresh" class="demo-config-refresh" (click)="refresh.emit()">
+      Refresh
+    </button>
+
+  </div>
+</details>

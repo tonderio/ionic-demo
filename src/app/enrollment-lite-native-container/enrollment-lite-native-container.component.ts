@@ -1,145 +1,180 @@
-import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { MessageService } from '../enrollment-container/message.service';
 import { Router } from '@angular/router';
-import { MaskitoOptions, MaskitoElementPredicate, maskitoTransform } from '@maskito/core';
-import { AlertController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import { DemoConfig } from '../components/demo-config/demo-config.component';
 
 @Component({
   selector: 'app-enrollment-lite-native-container',
   templateUrl: './enrollment-lite-native-container.component.html',
   styleUrls: ['./enrollment-lite-native-container.component.scss'],
 })
+export class EnrollmentLiteNativeContainerComponent implements OnInit, OnDestroy {
 
-export class EnrollmentLiteNativeContainerComponent {
+  errorMessage = '';
+  isSaving = false;
 
-  @Input() name?: string;
-  @Input() errorMessage?: string;
-  creditCardBrandIcon = ""
-  readonly cvvMask: MaskitoOptions = {
-    mask: [...Array(3).fill(/\d/)]
+  cardFieldState: Record<string, { isEmpty: boolean; isValid: boolean }> = {
+    cardholder_name:  { isEmpty: true, isValid: false },
+    card_number:      { isEmpty: true, isValid: false },
+    expiration_month: { isEmpty: true, isValid: false },
+    expiration_year:  { isEmpty: true, isValid: false },
+    cvv:              { isEmpty: true, isValid: false },
   };
 
-  readonly expirationMask: MaskitoOptions = {
-    mask: [
-      /\d/, /\d/, '/', /\d/, /\d/
-    ]
-  };
-  readonly cardMask: MaskitoOptions = {
-    mask: [
-      ...Array(4).fill(/\d/),
-      ' ',
-      ...Array(4).fill(/\d/),
-      ' ',
-      ...Array(4).fill(/\d/),
-      ' ',
-      ...Array(4).fill(/\d/),
-      ' ',
-      ...Array(3).fill(/\d/),
-    ],
+  config: DemoConfig = {
+    mode: 'stage',
+    apiKey: '11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27',
+    secretApiKey: '197967d431010dc1a129e3f726cb5fd27987da92',
+    email: 'test@example.com',
   };
 
-  readonly maskitoPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
+  private liteCheckout?: LiteCheckout;
 
-  paymentMethodForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    cardNumber: new FormControl('', Validators.required),
-    expirationDate: new FormControl('', Validators.required),
-    cvv: new FormControl('', Validators.required)
-  });
-
-  constructor(private messageService: MessageService, private router: Router, private alertController: AlertController, private translate: TranslateService) {
-    translate.setDefaultLang('es');
-    translate.use('es');
+  get baseUrl(): string {
+    return this.config.mode === 'production' ? 'https://app.tonder.io' : 'https://stage.tonder.io';
   }
 
-  async onSave(): Promise<any> {
-    if (!this.paymentMethodForm.valid) {
-      await this.presentAlert('Verifique que los campos son los correctos.');
-      this.paymentMethodForm.markAllAsTouched()
-      return;
-    }
+  get allFieldsValid(): boolean {
+    return Object.values(this.cardFieldState).every(f => f.isValid);
+  }
+
+  constructor(
+    private messageService: MessageService,
+    private router: Router,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    await this.initCheckout();
+  }
+
+  ngOnDestroy(): void {
+    this.liteCheckout?.unmountCardFields();
+  }
+
+  private updateField(field: string, e: { isEmpty: boolean; isValid: boolean }) {
+    this.ngZone.run(() => {
+      this.cardFieldState[field] = { isEmpty: e.isEmpty, isValid: e.isValid };
+      this.cdr.detectChanges();
+    });
+  }
+
+  private async initCheckout(): Promise<void> {
     try {
-      const secretApiKey = "49a70935cca8e84fd23f978c526af6e722d7499b";
-      const apiKey = "00d17d61e9240c6e0611fbdb1558e636ed6389db";
-      const baseUrl = "https://stage.tonder.io";
-      const abortController = new AbortController();
-
-      let checkoutData = {
-        // set your customer information
-        customer: {
-          name: "Jhon",
-          lastname: "Doe",
-          email: "john.c.calhoun@examplepetstore.com",
-          phone: "+58452258525"
+      this.liteCheckout = new LiteCheckout({
+        mode: this.config.mode,
+        apiKey: this.config.apiKey,
+        events: {
+          cardHolderEvents: { onChange: (e) => this.updateField('cardholder_name', e) },
+          cardNumberEvents:  { onChange: (e) => this.updateField('card_number', e) },
+          monthEvents:       { onChange: (e) => this.updateField('expiration_month', e) },
+          yearEvents:        { onChange: (e) => this.updateField('expiration_year', e) },
+          cvvEvents:         { onChange: (e) => this.updateField('cvv', e) },
         },
-        skyflowTokens: {
-          cardholder_name: "",
-          card_number: "",
-          expiration_year: "",
-          expiration_month: "",
-          cvv: "",
-          skyflow_id: ""
-        }
-      }
-
-      const liteCheckout = new LiteCheckout({
-        baseUrlTonder: baseUrl,
-        signal: abortController.signal,
-        apiKey: apiKey
-      })
-
-      const secureToken = await liteCheckout.getSecureToken(secretApiKey)
-
-      liteCheckout.configureCheckout({
-        customer: checkoutData.customer,
-        secureToken: secureToken?.access
+        customization: {
+          styles: {
+            enableCardIcon: true,
+            cardForm: {
+              inputStyles: {
+                base: {
+                  borderRadius: '12px',
+                  border: '1.5px solid #c39bd3',
+                  padding: '10px 14px',
+                  fontSize: '14px',
+                  color: '#2c003e',
+                  backgroundColor: '#fdf6ff',
+                },
+                focus: {
+                  borderColor: '#8e44ad',
+                  boxShadow: '0 0 0 3px rgba(142,68,173,0.18)',
+                  outline: 'none',
+                },
+                complete: { borderColor: '#27ae60' },
+                invalid:  { borderColor: '#e74c3c', color: '#c0392b' },
+              },
+              labelStyles: {
+                base: {
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  color: '#6c3483',
+                  marginBottom: '4px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                },
+              },
+              // errorStyles: {
+              //   base: { color: '#e74c3c', fontSize: '10px', marginTop: '3px' },
+              // },
+            },
+            // Card number: extra letter-spacing for readability
+            cardNumber: {
+              inputStyles: {
+                base: { 
+                  letterSpacing: '2px',
+                  borderRadius: '12px',
+                  border: '1.5px solid #c39bd3',
+                  padding: '10px 14px',
+                  fontSize: '14px',
+                  color: '#2c003e',
+                  backgroundColor: '#fdf6ff',
+                },
+                focus: {
+                  borderColor: '#8e44ad',
+                  boxShadow: '0 0 0 3px rgba(142,68,173,0.18)',
+                  outline: 'none',
+                },
+                complete: { borderColor: '#27ae60' },
+                invalid:  { borderColor: '#e74c3c', color: '#c0392b' },
+              },
+              // errorStyles: {
+              //   base: { color: '#e74c3c', fontSize: '10px', marginTop: '3px' },
+              // },
+            },
+          },
+        },
       });
 
-      const expirationDate = this.paymentMethodForm.value.expirationDate?.split("/");
-      const skyflowFields = {
-        card_number: this.paymentMethodForm.value.cardNumber!,
-        cvv: this.paymentMethodForm.value.cvv!,
-        expiration_month: expirationDate ? expirationDate[0] : '',
-        expiration_year: expirationDate ? expirationDate[1] : '',
-        cardholder_name: this.paymentMethodForm.value.name!
-      }
+      const { access } = await fetch(`${this.baseUrl}/api/secure-token/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Token ${this.config.secretApiKey}`,
+          'Content-Type': 'application/json',
+        },
+      }).then(r => r.json());
 
-      await liteCheckout.saveCustomerCard(skyflowFields);
+      this.liteCheckout.configureCheckout({
+        customer: { email: this.config.email },
+        secureToken: access,
+      });
 
-
-      this.messageService.setMessage('Tarjeta guardada exitosamente.');
-        this.router.navigate(['/tabs/tab2']);
-
+      await this.liteCheckout.mountCardFields({
+        fields: [
+          { field: 'cardholder_name',  container_id: '#collect_native_cardholder_name' },
+          { field: 'card_number',      container_id: '#collect_native_card_number' },
+          { field: 'expiration_month', container_id: '#collect_native_expiration_month' },
+          { field: 'expiration_year',  container_id: '#collect_native_expiration_year' },
+          { field: 'cvv',              container_id: '#collect_native_cvv' },
+        ],
+      });
     } catch (error: any) {
-      await this.presentAlert('Error al guardar la tarjeta.');
       this.errorMessage = error.message;
-      const timeout = setTimeout(() => {
-        this.errorMessage = "";
-        clearTimeout(timeout);
-      }, 5000)
     }
-
   }
 
-  onCardNumberChange(cardNumber: string) {
-    // implement the logic you need
-  }
-
-  detectCardBrand(cardNumber: string) {
-    // implement the logic you need
-  }
-
-  // only a example to show alert
-  async presentAlert(message: string) {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      message: message,
-      buttons: ['OK']
-    });
-
-    await alert.present();
+  async onSave(): Promise<void> {
+    if (!this.liteCheckout) return;
+    this.isSaving = true;
+    try {
+      await this.liteCheckout.saveCustomerCard();
+      this.messageService.setMessage('Tarjeta guardada exitosamente.');
+      this.router.navigate(['/tabs/tab2']);
+    } catch (error: any) {
+      this.errorMessage = error.message;
+      setTimeout(() => this.errorMessage = '', 5000);
+    } finally {
+      this.isSaving = false;
+    }
   }
 }

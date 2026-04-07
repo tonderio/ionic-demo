@@ -3,10 +3,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
 import { Platform } from '@ionic/angular';
-import { Card } from '@tonder.io/ionic-full-sdk/dist/helpers/template';
 
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
+import { DemoConfig } from '../components/demo-config/demo-config.component';
 
 @Component({
   selector: 'app-enrollment-container',
@@ -24,10 +24,12 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
 
   customerData: any;
 
-  apiKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
-  secretApiKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
-  mode: "development" | "stage" | "production" = "stage";
-  email: string = "test@example.com";
+  config: DemoConfig = {
+    mode: 'stage',
+    apiKey: '11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27',
+    secretApiKey: '197967d431010dc1a129e3f726cb5fd27987da92',
+    email: 'test@example.com',
+  };
 
   constructor(public platform: Platform, private messageService: MessageService, private router: Router) {
     this.externalButton = false;
@@ -43,9 +45,9 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
     const returnUrl = `${window.location.origin}/tabs/tab2`
     this.inlineCheckout?.removeCheckout()
     this.inlineCheckout = new InlineCheckout({
-      apiKey: this.apiKey,
+      apiKey: this.config.apiKey,
       returnUrl: returnUrl,
-      mode: this.mode,
+      mode: this.config.mode,
       renderPaymentButton: false,
       renderSaveCardButton: !renderButton,
       isEnrollmentCard: true,
@@ -92,7 +94,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
         this.inlineCheckout?.removeCheckout()
       },
     });
-    const secureToken = await this.inlineCheckout.getSecureToken(this.secretApiKey)
+    const secureToken = await this.inlineCheckout.getSecureToken(this.config.secretApiKey)
     this.inlineCheckout.configureCheckout({customer: this.customerData?.customer, secureToken: secureToken?.access});
     this.inlineCheckout.injectCheckout();
   }
@@ -112,7 +114,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
         city: "The city",
         state: "The state",
         postCode: "98746",
-        email: this.email,
+        email: this.config.email,
         phone: "+58 4169855522"
       }
     }

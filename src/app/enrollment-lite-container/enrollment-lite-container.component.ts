@@ -1,103 +1,138 @@
-import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
-import { MessageService } from '../enrollment-container/message.service';
-import { Router } from '@angular/router';
-import {ISaveCardRequest} from "@tonder.io/ionic-lite-sdk/src/types/card";
+import { DemoConfig } from '../components/demo-config/demo-config.component';
 
 @Component({
   selector: 'app-enrollment-lite-container',
   templateUrl: './enrollment-lite-container.component.html',
   styleUrls: ['./enrollment-lite-container.component.scss'],
 })
+export class EnrollmentLiteContainerComponent implements OnInit {
 
-export class EnrollmentLiteContainerComponent {
+  // ── Demo config (bound to <app-demo-config>) ────────────────────────────────
+  config: DemoConfig = {
+    mode: 'stage',
+    apiKey: '11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27',
+    secretApiKey: '197967d431010dc1a129e3f726cb5fd27987da92',
+    email: 'test@example.com',
+  };
 
-  @Input() name?: string;
-  @Input() errorMessage?: string;
+  // ── UI state ─────────────────────────────────────────────────────────────────
+  errorMessage = '';
+  isSaving     = false;
+  cardSaved    = false;
 
-  apiKey: string = "11e3d3c3e95e0eaabbcae61ebad34ee5f93c3d27";
-  secretApiKey: string = "197967d431010dc1a129e3f726cb5fd27987da92";
-  mode: "development" | "stage" | "production" = "stage";
-  email: string = "test@example.com";
+  // ── Card preview (driven by Skyflow onChange events) ─────────────────────────
+  cardPreview = { cardholder_name: '', card_number: '', expiration_month: '', expiration_year: '' };
 
-  get baseUrl(): string {
-    return this.mode === "production" ? "https://app.tonder.io" : "https://stage.tonder.io";
+  cardFieldState: Record<string, { isEmpty: boolean; isValid: boolean }> = {
+    cardholder_name:  { isEmpty: true, isValid: false },
+    card_number:      { isEmpty: true, isValid: false },
+    expiration_month: { isEmpty: true, isValid: false },
+    expiration_year:  { isEmpty: true, isValid: false },
+    cvv:              { isEmpty: true, isValid: false },
+  };
+
+  private liteCheckout?: LiteCheckout;
+
+  get baseUrl() {
+    return this.config.mode === 'production' ? 'https://app.tonder.io' : 'https://stage.tonder.io';
   }
 
-  paymentForm = new FormGroup({
-    name: new FormControl('Pedro Paramo'),
-    cardNumber: new FormControl('4242424242424242'),
-    month: new FormControl('12'),
-    expirationYear: new FormControl('28'),
-    cvv: new FormControl('123')
-  });
+  constructor(private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
-  constructor(private messageService: MessageService, private router: Router) {}
+  async ngOnInit() {
+        console.log('Initializing enroll checkout');
+    await this.initCheckout();
+  }
 
-  async onSave(event: Event): Promise<any> {
+  // ── Private ──────────────────────────────────────────────────────────────────
 
+  private updateField(field: string, e: { value?: string; isEmpty: boolean; isValid: boolean }) {
+    this.ngZone.run(() => {
+      if (field in this.cardPreview) (this.cardPreview as any)[field] = e.value ?? '';
+      this.cardFieldState[field] = { isEmpty: e.isEmpty, isValid: e.isValid };
+      this.cdr.detectChanges();
+    });
+  }
+
+  private async initCheckout() {
     try {
-
-      const abortController = new AbortController();
-
-      let checkoutData = {
-        customer: {
-          name: "Jhon",
-          lastname: "Doe",
-          email: this.email,
-          phone: "+58452258525"
+      this.liteCheckout = new LiteCheckout({
+        mode: this.config.mode,
+        apiKey: this.config.apiKey,
+        events: {
+          cardHolderEvents: { onChange: (e) => this.updateField('cardholder_name',  e) },
+          cardNumberEvents:  { onChange: (e) => this.updateField('card_number',      e) },
+          monthEvents:       { onChange: (e) => this.updateField('expiration_month', e) },
+          yearEvents:        { onChange: (e) => this.updateField('expiration_year',  e) },
+          cvvEvents:         { onChange: (e) => this.updateField('cvv',              e) },
         },
-        skyflowTokens: {
-          cardholder_name: "",
-          card_number: "",
-          expiration_year: "",
-          expiration_month: "",
-          cvv: "",
-          skyflow_id: ""
-        }
-      }
-
-      const liteCheckout = new LiteCheckout({
-        mode: this.mode,
-        signal: abortController.signal,
-        apiKey: this.apiKey
-      })
-    const secureTokenResponse = await fetch(`${this.baseUrl}/api/secure-token/`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${this.secretApiKey}`,
-        'Content-Type': 'application/json'
-      },
-    })
-    const result =  await secureTokenResponse.json();
-
-      liteCheckout.configureCheckout({
-        customer: checkoutData.customer,
-        secureToken: result?.access
       });
 
-      const skyflowFields: ISaveCardRequest = {
-        card_number: this.paymentForm.value.cardNumber!,
-        cvv: this.paymentForm.value.cvv!,
-        expiration_month: this.paymentForm.value.month!,
-        expiration_year: this.paymentForm.value.expirationYear!,
-        cardholder_name: this.paymentForm.value.name!
-      }
+      const { access } = await fetch(`${this.baseUrl}/api/secure-token/`, {
+        method: 'POST',
+        headers: { 'Authorization': `Token ${this.config.secretApiKey}`, 'Content-Type': 'application/json' },
+      }).then(r => r.json());
 
-      await liteCheckout.saveCustomerCard(skyflowFields);
+      this.liteCheckout.configureCheckout({ customer: { email: this.config.email }, secureToken: access });
 
-      this.messageService.setMessage('Tarjeta guardada exitosamente.');
-        this.router.navigate(['/tabs/tab2']);
-
+      await this.liteCheckout.mountCardFields({
+        fields: [{container_id: '#collect_enroll_cardholder_name', field: 'cardholder_name'}, {container_id: '#collect_enroll_card_number', field: 'card_number'}, {container_id: '#collect_enroll_expiration_month', field: 'expiration_month'}, {container_id: '#collect_enroll_expiration_year', field: 'expiration_year'}, {container_id: '#collect_enroll_cvv', field: 'cvv'}],
+      });
     } catch (error: any) {
       this.errorMessage = error.message;
-      const timeout = setTimeout(() => {
-        this.errorMessage = "";
-        clearTimeout(timeout);
-      }, 5000)
     }
-
   }
 
+  // ── Public ───────────────────────────────────────────────────────────────────
+
+  async onSave() {
+    this.isSaving = true;
+    try {
+      await this.liteCheckout!.saveCustomerCard();
+
+      this.cardSaved = true;
+      await new Promise(r => setTimeout(r, 50)); // wait for Angular to render reveal divs
+
+      await this.liteCheckout!.revealCardFields({
+        fields: [
+          { field: 'card_number',      styles: { inputStyles: { base: REVEAL_TEXT_STYLE } } },
+          { field: 'cardholder_name',  styles: { inputStyles: { base: REVEAL_TEXT_STYLE } } },
+          { field: 'expiration_month', styles: { inputStyles: { base: REVEAL_EXPIRY_STYLE } } },
+          { field: 'expiration_year',  styles: { inputStyles: { base: REVEAL_EXPIRY_STYLE } } },
+        ],
+      });
+    } catch (error: any) {
+      this.errorMessage = error.message;
+      setTimeout(() => this.errorMessage = '', 5000);
+    } finally {
+      this.isSaving = false;
+    }
+  }
+
+  async reset() {
+    this.cardSaved    = false;
+    this.errorMessage = '';
+    this.cardPreview  = { cardholder_name: '', card_number: '', expiration_month: '', expiration_year: '' };
+    this.cardFieldState = {
+      cardholder_name:  { isEmpty: true, isValid: false },
+      card_number:      { isEmpty: true, isValid: false },
+      expiration_month: { isEmpty: true, isValid: false },
+      expiration_year:  { isEmpty: true, isValid: false },
+      cvv:              { isEmpty: true, isValid: false },
+    };
+    await this.initCheckout();
+  }
 }
+
+// ─── Styles passed to Skyflow Reveal Elements rendered inside the card ─────────
+
+const REVEAL_TEXT_STYLE = {
+  color: '#ffffff', fontFamily: '"Courier New", Courier, monospace',
+  fontSize: '15px', fontWeight: '600', letterSpacing: '2px',
+  border: 'none', background: 'transparent', padding: '0', margin: '0',
+  width: '100%', height: '24px',
+};
+
+const REVEAL_EXPIRY_STYLE = { ...REVEAL_TEXT_STYLE, fontSize: '13px', letterSpacing: '1px' };

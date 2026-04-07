@@ -126,17 +126,11 @@
   display: flex !important;
   justify-content: space-between !important;
   width: 100% !important;
+  gap: 10px;
 }
 
 .collect-row > :first-child {
   min-width: 120px !important; 
-}
-
-.expiration-year {
-  padding-top: 2px !important;
-  & input {
-    width: 100%;
-  }
 }
 
 .empty-div {
