@@ -47,8 +47,9 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     this.showLayer = false;
   }
 
-  onPayment(event: any) {
-    this.inlineCheckout.payment(this.customerData)
+  async onPayment(event: any) {
+    const response = await this.inlineCheckout.payment(this.customerData)
+    console.log('Payment response', response)
   }
 
   initCheckout(renderButton?: boolean) {
@@ -70,6 +71,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
           renderPaymentButton: !renderButton,
           callBack: (response: any) => {
             this.showLayer = true
+            console.log('Callback Payment response', response)
           },
           isOpenPaySandbox: true,
           customization: {

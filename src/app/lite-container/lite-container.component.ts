@@ -59,6 +59,7 @@ export class LiteContainerComponent {
 
       // Card data is collected from mounted Skyflow Elements — no raw values needed
       const response = await this.liteCheckout!.payment(paymentData);
+      console.log('Payment response', response)
       alert('Payment status: ' + response?.transaction_status);
     } catch (error: any) {
       console.log("error====", error.message, '-', error.code, '-', error.status, '-', error.statusCode, '-', error.details);
@@ -108,7 +109,7 @@ export class LiteContainerComponent {
       mode: this.config.mode,
       apiKey: this.config.apiKey,
       callBack: (response: any) => {
-        console.log('Checkout response', response);
+        console.log('Callback Payment response', response)
       },
       customization: {
         redirectOnComplete: false
