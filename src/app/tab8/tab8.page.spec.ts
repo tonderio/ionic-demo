@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { EnrollmentLiteNativeContainerComponent } from '../enrollment-lite-native-container/enrollment-lite-native-container.component';
 
@@ -11,7 +11,8 @@ describe('Tab7Page', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [IonicModule.forRoot(), EnrollmentLiteNativeContainerComponent, Tab8Page]
+    imports: [EnrollmentLiteNativeContainerComponent, Tab8Page],
+      providers: [provideIonicAngular()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(Tab8Page);

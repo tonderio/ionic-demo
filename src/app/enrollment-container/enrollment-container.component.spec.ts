@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { EnrollmentContainerComponent } from './enrollment-container.component';
 
@@ -11,10 +11,10 @@ describe('EnrollmentContainerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IonicModule.forRoot(),
         RouterTestingModule,
         EnrollmentContainerComponent
-      ]
+      ],
+      providers: [provideIonicAngular()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(EnrollmentContainerComponent);

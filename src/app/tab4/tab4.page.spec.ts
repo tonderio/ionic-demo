@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
@@ -11,7 +11,8 @@ describe('Tab4Page', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [IonicModule.forRoot(), ExploreContainerComponent, Tab4Page]
+    imports: [ExploreContainerComponent, Tab4Page],
+      providers: [provideIonicAngular()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(Tab4Page);

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { FullCheckoutContainerComponent } from '../fullcheckout-container/fullcheckout-container.component';
 
@@ -11,7 +11,8 @@ describe('Tab5Page', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [IonicModule.forRoot(), FullCheckoutContainerComponent, Tab5Page]
+    imports: [FullCheckoutContainerComponent, Tab5Page],
+      providers: [provideIonicAngular()]
 }).compileComponents();
 
     fixture = TestBed.createComponent(Tab5Page);

@@ -3,14 +3,14 @@ import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { MessageService } from '../enrollment-container/message.service';
 import { Router } from '@angular/router';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
-import { IonicModule } from '@ionic/angular';
+import { IonContent } from '@ionic/angular';
 import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-enrollment-lite-native-container',
     templateUrl: './enrollment-lite-native-container.component.html',
     styleUrls: ['./enrollment-lite-native-container.component.scss'],
-    imports: [IonicModule, DemoConfigComponent, NgIf]
+    imports: [IonContent, DemoConfigComponent, NgIf]
 })
 export class EnrollmentLiteNativeContainerComponent implements OnInit, OnDestroy {
 
