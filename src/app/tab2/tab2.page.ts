@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MessageService } from '../enrollment-container/message.service';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 import { SuccessContainerComponent } from '../success-container/success-container.component'; 
@@ -10,8 +10,9 @@ import { SuccessContainerComponent } from '../success-container/success-containe
     imports: [IonContent, IonHeader, IonTitle, IonToolbar, SuccessContainerComponent]
 })
 export class Tab2Page {
+  private messageService = inject(MessageService);
+
   public message: string = '';
-  constructor(private messageService: MessageService) {}
 
   ngOnInit() {
     this.message = this.messageService.getMessage();

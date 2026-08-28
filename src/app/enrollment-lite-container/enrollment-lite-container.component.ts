@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit, inject } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
 import { CardPreviewComponent } from '../components/card-preview/card-preview.component';
@@ -11,6 +11,9 @@ import { NgIf } from '@angular/common';
     imports: [DemoConfigComponent, CardPreviewComponent, NgIf]
 })
 export class EnrollmentLiteContainerComponent implements OnInit {
+  private ngZone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
+
 
   // ── Demo config (bound to <app-demo-config>) ────────────────────────────────
   config: DemoConfig = {
@@ -41,8 +44,6 @@ export class EnrollmentLiteContainerComponent implements OnInit {
   get baseUrl() {
     return this.config.mode === 'production' ? 'https://app.tonder.io' : 'https://stage.tonder.io';
   }
-
-  constructor(private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   async ngOnInit() {
         console.log('Initializing enroll checkout');

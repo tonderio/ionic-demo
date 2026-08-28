@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 
 import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
@@ -18,6 +18,10 @@ import { NgIf } from '@angular/common';
 })
 
 export class EnrollmentContainerComponent implements OnInit, OnDestroy {
+  platform = inject(Platform);
+  private messageService = inject(MessageService);
+  private router = inject(Router);
+
 
   @Input() name?: string;
 
@@ -34,7 +38,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
     email: 'test@example.com',
   };
 
-  constructor(public platform: Platform, private messageService: MessageService, private router: Router) {
+  constructor() {
     this.externalButton = false;
     this.customerData = null;
   }

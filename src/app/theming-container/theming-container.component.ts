@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
 import { InlineCheckout } from '@tonder.io/ionic-full-sdk/dist';
 
 import { Platform } from '@ionic/angular';
@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class ThemingContainerComponent implements OnInit, OnDestroy {
+  platform = inject(Platform);
+
 
   @Input() name?: string;
 
@@ -21,7 +23,7 @@ export class ThemingContainerComponent implements OnInit, OnDestroy {
 
   customStyles: any;
 
-  constructor(public platform: Platform) {
+  constructor() {
     this.customerData = null;
   }
 

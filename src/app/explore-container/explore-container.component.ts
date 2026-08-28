@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 
 import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
@@ -16,6 +16,8 @@ import { NgIf } from '@angular/common';
 })
 
 export class ExploreContainerComponent implements OnInit, OnDestroy {
+  platform = inject(Platform);
+
 
   @Input() name?: string;
 
@@ -43,7 +45,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     return this.config.mode === 'production' ? 'https://app.tonder.io' : 'https://stage.tonder.io';
   }
 
-  constructor(public platform: Platform) {
+  constructor() {
     this.externalButton = false;
     this.customerData = null;
     this.secureToken = null;

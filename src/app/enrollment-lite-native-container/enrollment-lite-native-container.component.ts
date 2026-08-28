@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit, inject } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { MessageService } from '../enrollment-container/message.service';
 import { Router } from '@angular/router';
@@ -13,6 +13,11 @@ import { NgIf } from '@angular/common';
     imports: [IonContent, DemoConfigComponent, NgIf]
 })
 export class EnrollmentLiteNativeContainerComponent implements OnInit, OnDestroy {
+  private messageService = inject(MessageService);
+  private router = inject(Router);
+  private ngZone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
+
 
   errorMessage = '';
   isSaving = false;
@@ -41,13 +46,6 @@ export class EnrollmentLiteNativeContainerComponent implements OnInit, OnDestroy
   get allFieldsValid(): boolean {
     return Object.values(this.cardFieldState).every(f => f.isValid);
   }
-
-  constructor(
-    private messageService: MessageService,
-    private router: Router,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef,
-  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.initCheckout();
