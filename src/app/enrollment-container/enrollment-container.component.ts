@@ -8,13 +8,13 @@ import { MessageService } from './message.service';
 import { Router } from '@angular/router';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'app-enrollment-container',
     templateUrl: './enrollment-container.component.html',
     styleUrls: ['./enrollment-container.component.scss'],
-    imports: [DemoConfigComponent, FormsModule, NgIf]
+    imports: [DemoConfigComponent, FormsModule]
 })
 
 export class EnrollmentContainerComponent implements OnInit, OnDestroy {

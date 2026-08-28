@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+
 
 export interface DemoConfig {
   mode: 'development' | 'stage' | 'production';
@@ -21,7 +21,7 @@ export interface DemoConfig {
     selector: 'app-demo-config',
     templateUrl: './demo-config.component.html',
     styleUrls: ['./demo-config.component.scss'],
-    imports: [FormsModule, NgIf]
+    imports: [FormsModule]
 })
 export class DemoConfigComponent {
   /** Config object shared with the parent component (mutated in-place). */

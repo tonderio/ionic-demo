@@ -2,13 +2,13 @@ import { ChangeDetectorRef, Component, NgZone, OnInit, inject } from '@angular/c
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
 import { CardPreviewComponent } from '../components/card-preview/card-preview.component';
-import { NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'app-enrollment-lite-container',
     templateUrl: './enrollment-lite-container.component.html',
     styleUrls: ['./enrollment-lite-container.component.scss'],
-    imports: [DemoConfigComponent, CardPreviewComponent, NgIf]
+    imports: [DemoConfigComponent, CardPreviewComponent]
 })
 export class EnrollmentLiteContainerComponent implements OnInit {
   private ngZone = inject(NgZone);

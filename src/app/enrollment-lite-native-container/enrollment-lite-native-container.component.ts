@@ -4,13 +4,13 @@ import { MessageService } from '../enrollment-container/message.service';
 import { Router } from '@angular/router';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
 import { IonContent } from '@ionic/angular';
-import { NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'app-enrollment-lite-native-container',
     templateUrl: './enrollment-lite-native-container.component.html',
     styleUrls: ['./enrollment-lite-native-container.component.scss'],
-    imports: [IonContent, DemoConfigComponent, NgIf]
+    imports: [IonContent, DemoConfigComponent]
 })
 export class EnrollmentLiteNativeContainerComponent implements OnInit, OnDestroy {
   private messageService = inject(MessageService);

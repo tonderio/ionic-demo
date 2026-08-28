@@ -6,13 +6,13 @@ import { Platform } from '@ionic/angular';
 import { IProcessPaymentRequest } from '@tonder.io/ionic-full-sdk/dist/types/commons';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'app-explore-container',
     templateUrl: './explore-container.component.html',
     styleUrls: ['./explore-container.component.scss'],
-    imports: [DemoConfigComponent, FormsModule, NgIf]
+    imports: [DemoConfigComponent, FormsModule]
 })
 
 export class ExploreContainerComponent implements OnInit, OnDestroy {

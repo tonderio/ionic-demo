@@ -30,7 +30,7 @@
       <input type="email" [(ngModel)]="config.email">
     </div>
 
-    <ng-container *ngIf="showPaymentFields">
+    @if (showPaymentFields) {
       <div class="demo-config-field">
         <label>Amount</label>
         <input type="number" [(ngModel)]="config.amount">
@@ -43,11 +43,13 @@
         <label>Metadata (JSON)</label>
         <textarea rows="3" [(ngModel)]="config.metadataJson" placeholder='{"key": "value"}'></textarea>
       </div>
-    </ng-container>
+    }
 
-    <button *ngIf="showRefresh" class="demo-config-refresh" (click)="refresh.emit()">
-      Refresh
-    </button>
+    @if (showRefresh) {
+      <button class="demo-config-refresh" (click)="refresh.emit()">
+        Refresh
+      </button>
+    }
 
   </div>
 </details>

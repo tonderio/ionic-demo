@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
+
 
 export interface CardPreviewData {
   cardholder_name: string;
@@ -25,7 +25,7 @@ export interface CardFieldState {
     selector: 'app-card-preview',
     templateUrl: './card-preview.component.html',
     styleUrls: ['./card-preview.component.scss'],
-    imports: [NgIf]
+    imports: []
 })
 export class CardPreviewComponent {
   @Input() cardPreview!: CardPreviewData;

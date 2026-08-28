@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
-import { NgIf, NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'app-lite-payment-saved-cards',
     templateUrl: './lite-payment-saved-cards.component.html',
     styleUrls: ['./lite-payment-saved-cards.component.scss'],
-    imports: [DemoConfigComponent, NgIf, NgFor]
+    imports: [DemoConfigComponent]
 })
 export class LitePaymentSavedCardsComponent implements OnInit {
   liteCheckout?: LiteCheckout;
