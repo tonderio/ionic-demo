@@ -2,11 +2,13 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { InlineCheckout } from '@tonder.io/ionic-full-sdk/dist';
 
 import { Platform } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-theming-container',
-  templateUrl: './theming-container.component.html',
-  styleUrls: ['./theming-container.component.scss'],
+    selector: 'app-theming-container',
+    templateUrl: './theming-container.component.html',
+    styleUrls: ['./theming-container.component.scss'],
+    imports: [FormsModule]
 })
 
 export class ThemingContainerComponent implements OnInit, OnDestroy {

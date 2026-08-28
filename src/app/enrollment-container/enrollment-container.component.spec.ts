@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { EnrollmentContainerComponent } from './enrollment-container.component';
-import { EnrollmentContainerComponentModule } from './enrollment-container.module';
 
 describe('EnrollmentContainerComponent', () => {
   let component: EnrollmentContainerComponent;
@@ -14,7 +13,7 @@ describe('EnrollmentContainerComponent', () => {
       imports: [
         IonicModule.forRoot(),
         RouterTestingModule,
-        EnrollmentContainerComponentModule
+        EnrollmentContainerComponent
       ]
     }).compileComponents();
 

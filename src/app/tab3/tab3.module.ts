@@ -4,16 +4,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
 import { Tab3PageRoutingModule } from './tab3-routing.module';
-import { LiteContainerComponentModule } from '../lite-container/lite-container.module';
+
 
 @NgModule({
-  imports: [
+    imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    LiteContainerComponentModule,
-    Tab3PageRoutingModule
-  ],
-  declarations: [Tab3Page]
+    Tab3PageRoutingModule,
+    Tab3Page
+]
 })
 export class Tab3PageModule {}

@@ -9,9 +9,8 @@ describe('EnrollmentLiteContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EnrollmentLiteContainerComponent],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), EnrollmentLiteContainerComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(EnrollmentLiteContainerComponent);
     component = fixture.componentInstance;

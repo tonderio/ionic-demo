@@ -6,12 +6,15 @@ import { Platform } from '@ionic/angular';
 
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
-import { DemoConfig } from '../components/demo-config/demo-config.component';
+import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
+import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-enrollment-container',
-  templateUrl: './enrollment-container.component.html',
-  styleUrls: ['./enrollment-container.component.scss'],
+    selector: 'app-enrollment-container',
+    templateUrl: './enrollment-container.component.html',
+    styleUrls: ['./enrollment-container.component.scss'],
+    imports: [DemoConfigComponent, FormsModule, NgIf]
 })
 
 export class EnrollmentContainerComponent implements OnInit, OnDestroy {

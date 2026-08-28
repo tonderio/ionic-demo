@@ -9,9 +9,8 @@ describe('FullCheckoutContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FullCheckoutContainerComponent],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), FullCheckoutContainerComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(FullCheckoutContainerComponent);
     component = fixture.componentInstance;

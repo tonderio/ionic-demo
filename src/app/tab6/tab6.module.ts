@@ -5,16 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { Tab6Page } from './tab6.page';
 
 import { Tab6PageRoutingModule } from './tab6-routing.module';
-import { EnrollmentContainerComponentModule } from '../enrollment-container/enrollment-container.module';
+
 
 @NgModule({
-  imports: [
+    imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    EnrollmentContainerComponentModule,
-    Tab6PageRoutingModule
-  ],
-  declarations: [Tab6Page]
+    Tab6PageRoutingModule,
+    Tab6Page
+]
 })
 export class Tab6PageModule {}

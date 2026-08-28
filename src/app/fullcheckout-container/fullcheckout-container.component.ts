@@ -1,14 +1,16 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { IProcessPaymentRequest } from '@tonder.io/ionic-lite-sdk/dist/types/checkout';
 import { APM } from '@tonder.io/ionic-lite-sdk/dist/types/commons';
 import {ILiteCheckout} from "@tonder.io/ionic-lite-sdk/dist/types/liteInlineCheckout";
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-fullcheckout-container',
-  templateUrl: './fullcheckout-container.component.html',
-  styleUrls: ['./fullcheckout-container.component.scss'],
+    selector: 'app-fullcheckout-container',
+    templateUrl: './fullcheckout-container.component.html',
+    styleUrls: ['./fullcheckout-container.component.scss'],
+    imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor]
 })
 
 export class FullCheckoutContainerComponent {
