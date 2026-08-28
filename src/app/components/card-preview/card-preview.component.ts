@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 
 export interface CardPreviewData {
@@ -25,6 +25,7 @@ export interface CardFieldState {
     selector: 'app-card-preview',
     templateUrl: './card-preview.component.html',
     styleUrls: ['./card-preview.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: []
 })
 export class CardPreviewComponent {

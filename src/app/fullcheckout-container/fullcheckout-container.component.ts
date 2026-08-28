@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { IProcessPaymentRequest } from '@tonder.io/ionic-lite-sdk/dist/types/checkout';
@@ -10,6 +10,7 @@ import {ILiteCheckout} from "@tonder.io/ionic-lite-sdk/dist/types/liteInlineChec
     selector: 'app-fullcheckout-container',
     templateUrl: './fullcheckout-container.component.html',
     styleUrls: ['./fullcheckout-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, ReactiveFormsModule]
 })
 

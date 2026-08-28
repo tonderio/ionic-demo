@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { IProcessPaymentRequest } from '@tonder.io/ionic-lite-sdk/dist/types/checkout';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
@@ -7,6 +7,7 @@ import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-
     selector: 'app-lite-container',
     templateUrl: './lite-container.component.html',
     styleUrls: ['./lite-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DemoConfigComponent]
 })
 

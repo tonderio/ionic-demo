@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 import { InlineCheckout } from '@tonder.io/ionic-full-sdk/dist';
 
 import { Platform } from '@ionic/angular';
@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
     selector: 'app-theming-container',
     templateUrl: './theming-container.component.html',
     styleUrls: ['./theming-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule]
 })
 

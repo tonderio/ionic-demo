@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 import { LitePaymentSavedCardsComponent } from '../lite-payment-saved-cards/lite-payment-saved-cards.component';
 
@@ -6,6 +6,7 @@ import { LitePaymentSavedCardsComponent } from '../lite-payment-saved-cards/lite
     selector: 'app-tab9',
     templateUrl: 'tab9.page.html',
     styleUrls: ['tab9.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonContent, IonHeader, IonTitle, IonToolbar, LitePaymentSavedCardsComponent]
 })
 export class Tab9Page {

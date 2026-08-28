@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 
@@ -21,6 +21,7 @@ export interface DemoConfig {
     selector: 'app-demo-config',
     templateUrl: './demo-config.component.html',
     styleUrls: ['./demo-config.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule]
 })
 export class DemoConfigComponent {

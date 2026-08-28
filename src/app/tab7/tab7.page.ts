@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 import { EnrollmentLiteContainerComponent } from '../enrollment-lite-container/enrollment-lite-container.component';
 
@@ -6,6 +6,7 @@ import { EnrollmentLiteContainerComponent } from '../enrollment-lite-container/e
     selector: 'app-tab7',
     templateUrl: 'tab7.page.html',
     styleUrls: ['tab7.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonContent, IonHeader, IonTitle, IonToolbar, EnrollmentLiteContainerComponent]
 })
 export class Tab7Page {

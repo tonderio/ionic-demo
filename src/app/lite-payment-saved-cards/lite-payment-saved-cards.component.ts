@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
 
@@ -7,6 +7,7 @@ import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-
     selector: 'app-lite-payment-saved-cards',
     templateUrl: './lite-payment-saved-cards.component.html',
     styleUrls: ['./lite-payment-saved-cards.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DemoConfigComponent]
 })
 export class LitePaymentSavedCardsComponent implements OnInit {

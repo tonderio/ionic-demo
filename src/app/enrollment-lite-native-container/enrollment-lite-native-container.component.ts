@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
 import { MessageService } from '../enrollment-container/message.service';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { IonContent } from '@ionic/angular';
     selector: 'app-enrollment-lite-native-container',
     templateUrl: './enrollment-lite-native-container.component.html',
     styleUrls: ['./enrollment-lite-native-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonContent, DemoConfigComponent]
 })
 export class EnrollmentLiteNativeContainerComponent implements OnInit, OnDestroy {
