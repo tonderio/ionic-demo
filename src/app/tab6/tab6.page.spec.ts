@@ -3,19 +3,19 @@ import { IonicModule } from '@ionic/angular';
 
 import { FullCheckoutContainerComponentModule } from '../fullcheckout-container/fullcheckout-container.module';
 
-import { Tab5Page } from './tab6.page';
+import { Tab6Page } from './tab6.page';
 
 describe('Tab6Page', () => {
-  let component: Tab5Page;
-  let fixture: ComponentFixture<Tab5Page>;
+  let component: Tab6Page;
+  let fixture: ComponentFixture<Tab6Page>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Tab5Page],
+      declarations: [Tab6Page],
       imports: [IonicModule.forRoot(), FullCheckoutContainerComponentModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Tab5Page);
+    fixture = TestBed.createComponent(Tab6Page);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
