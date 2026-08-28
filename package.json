@@ -29,8 +29,6 @@
     "@capacitor/keyboard": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0",
     "@ionic/angular": "^9.0.1",
-    "@maskito/angular": "^2.3.2",
-    "@maskito/core": "^2.3.2",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@tonder.io/ionic-full-sdk": "1.0.0",
