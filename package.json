@@ -31,8 +31,8 @@
     "@ionic/angular": "^9.0.1",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
-    "@tonder.io/ionic-full-sdk": "1.0.0",
-    "@tonder.io/ionic-lite-sdk": "1.0.0",
+    "@tonder.io/ionic-full-sdk": "1.0.1",
+    "@tonder.io/ionic-lite-sdk": "1.0.1",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "zone.js": "~0.15.1"
