@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { ThemingContainerComponent } from './theming-container.component';
 
@@ -9,9 +9,9 @@ describe('ThemingContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ThemingContainerComponent],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [ThemingContainerComponent],
+      providers: [provideIonicAngular()]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ThemingContainerComponent);
     component = fixture.componentInstance;

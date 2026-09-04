@@ -40,13 +40,17 @@
         </div>
       </div>
 
-      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+      @if (errorMessage) {
+        <p class="error-message">{{ errorMessage }}</p>
+      }
 
       <button
         class="save-btn"
         (click)="onSave()"
         [disabled]="isSaving">
-        <span *ngIf="isSaving" class="btn-spinner"></span>
+        @if (isSaving) {
+          <span class="btn-spinner"></span>
+        }
         {{ isSaving ? 'Saving...' : 'Save card' }}
       </button>
     </div>

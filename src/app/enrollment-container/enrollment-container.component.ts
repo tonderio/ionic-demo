@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
@@ -6,15 +6,23 @@ import { Platform } from '@ionic/angular';
 
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
-import { DemoConfig } from '../components/demo-config/demo-config.component';
+import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
-  selector: 'app-enrollment-container',
-  templateUrl: './enrollment-container.component.html',
-  styleUrls: ['./enrollment-container.component.scss'],
+    selector: 'app-enrollment-container',
+    templateUrl: './enrollment-container.component.html',
+    styleUrls: ['./enrollment-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [DemoConfigComponent, FormsModule]
 })
 
 export class EnrollmentContainerComponent implements OnInit, OnDestroy {
+  platform = inject(Platform);
+  private messageService = inject(MessageService);
+  private router = inject(Router);
+
 
   @Input() name?: string;
 
@@ -31,7 +39,7 @@ export class EnrollmentContainerComponent implements OnInit, OnDestroy {
     email: 'test@example.com',
   };
 
-  constructor(public platform: Platform, private messageService: MessageService, private router: Router) {
+  constructor() {
     this.externalButton = false;
     this.customerData = null;
   }

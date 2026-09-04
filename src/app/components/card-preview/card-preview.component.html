@@ -7,18 +7,24 @@
       <div class="card-network-circle card-network-circle--left"></div>
       <div class="card-network-circle card-network-circle--right"></div>
     </div>
-    <div *ngIf="cardSaved" class="card-saved-badge">✅ Guardada</div>
+    @if (cardSaved) {
+      <div class="card-saved-badge">✅ Guardada</div>
+    }
   </div>
 
   <!-- Card number — live text while collecting, Reveal Element after save -->
   <div class="card-number-row">
-    <span *ngIf="!cardSaved" class="card-number-text"
-          [class.card-text--has-value]="!cardFieldState['card_number'].isEmpty"
-          [class.card-text--valid]="cardFieldState['card_number'].isValid">
-      {{ formatCardNumber(cardPreview.card_number) }}
-    </span>
+    @if (!cardSaved) {
+      <span class="card-number-text"
+        [class.card-text--has-value]="!cardFieldState['card_number'].isEmpty"
+        [class.card-text--valid]="cardFieldState['card_number'].isValid">
+        {{ formatCardNumber(cardPreview.card_number) }}
+      </span>
+    }
     <!-- Skyflow Reveal Element is mounted here by revealCardFields() -->
-    <div *ngIf="cardSaved" id="reveal_card_number" class="reveal-in-card reveal-in-card--number"></div>
+    @if (cardSaved) {
+      <div id="reveal_card_number" class="reveal-in-card reveal-in-card--number"></div>
+    }
   </div>
 
   <!-- Bottom row: holder + expiry + CVV indicator (CVV hidden after save) -->
@@ -26,38 +32,48 @@
 
     <div class="card-holder">
       <span class="card-field-label">Titular</span>
-      <span *ngIf="!cardSaved" class="card-value-text"
-            [class.card-text--has-value]="!cardFieldState['cardholder_name'].isEmpty"
-            [class.card-text--valid]="cardFieldState['cardholder_name'].isValid">
-        {{ cardFieldState['cardholder_name'].isEmpty ? 'NOMBRE APELLIDO' : (cardPreview.cardholder_name || '*** *******') }}
-      </span>
-      <div *ngIf="cardSaved" id="reveal_cardholder_name" class="reveal-in-card reveal-in-card--name"></div>
+      @if (!cardSaved) {
+        <span class="card-value-text"
+          [class.card-text--has-value]="!cardFieldState['cardholder_name'].isEmpty"
+          [class.card-text--valid]="cardFieldState['cardholder_name'].isValid">
+          {{ cardFieldState['cardholder_name'].isEmpty ? 'NOMBRE APELLIDO' : (cardPreview.cardholder_name || '*** *******') }}
+        </span>
+      }
+      @if (cardSaved) {
+        <div id="reveal_cardholder_name" class="reveal-in-card reveal-in-card--name"></div>
+      }
     </div>
 
     <div class="card-expiry">
       <span class="card-field-label">Vence</span>
-      <span *ngIf="!cardSaved" class="card-value-text"
-            [class.card-text--has-value]="!cardFieldState['expiration_month'].isEmpty || !cardFieldState['expiration_year'].isEmpty"
-            [class.card-text--valid]="cardFieldState['expiration_month'].isValid && cardFieldState['expiration_year'].isValid">
-        {{ formatExpiry(cardPreview.expiration_month, cardPreview.expiration_year,
-                        cardFieldState['expiration_month'].isEmpty, cardFieldState['expiration_year'].isEmpty) }}
-      </span>
-      <div *ngIf="cardSaved" class="reveal-expiry-row">
-        <div id="reveal_expiration_month" class="reveal-in-card reveal-in-card--expiry"></div>
-        <span class="card-expiry-slash">/</span>
-        <div id="reveal_expiration_year" class="reveal-in-card reveal-in-card--expiry"></div>
-      </div>
+      @if (!cardSaved) {
+        <span class="card-value-text"
+          [class.card-text--has-value]="!cardFieldState['expiration_month'].isEmpty || !cardFieldState['expiration_year'].isEmpty"
+          [class.card-text--valid]="cardFieldState['expiration_month'].isValid && cardFieldState['expiration_year'].isValid">
+          {{ formatExpiry(cardPreview.expiration_month, cardPreview.expiration_year,
+          cardFieldState['expiration_month'].isEmpty, cardFieldState['expiration_year'].isEmpty) }}
+        </span>
+      }
+      @if (cardSaved) {
+        <div class="reveal-expiry-row">
+          <div id="reveal_expiration_month" class="reveal-in-card reveal-in-card--expiry"></div>
+          <span class="card-expiry-slash">/</span>
+          <div id="reveal_expiration_year" class="reveal-in-card reveal-in-card--expiry"></div>
+        </div>
+      }
     </div>
 
     <!-- CVV validity indicator — hidden after save (PCI: CVV must not be stored/displayed) -->
-    <div *ngIf="!cardSaved" class="card-cvv-indicator">
-      <span class="card-field-label">CVV</span>
-      <span class="cvv-dot"
-            [class.cvv-dot--filled]="!cardFieldState['cvv'].isEmpty"
-            [class.cvv-dot--valid]="cardFieldState['cvv'].isValid">
-        {{ cardFieldState['cvv'].isValid ? '✓' : (cardFieldState['cvv'].isEmpty ? '···' : '✗') }}
-      </span>
-    </div>
+    @if (!cardSaved) {
+      <div class="card-cvv-indicator">
+        <span class="card-field-label">CVV</span>
+        <span class="cvv-dot"
+          [class.cvv-dot--filled]="!cardFieldState['cvv'].isEmpty"
+          [class.cvv-dot--valid]="cardFieldState['cvv'].isValid">
+          {{ cardFieldState['cvv'].isValid ? '✓' : (cardFieldState['cvv'].isEmpty ? '···' : '✗') }}
+        </span>
+      </div>
+    }
 
   </div>
 

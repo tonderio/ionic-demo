@@ -3,47 +3,53 @@
 
   <app-demo-config [config]="config" [showPaymentFields]="true" [showRefresh]="true" (refresh)="ngOnInit()"></app-demo-config>
 
-  <ng-container *ngIf="loading">
+  @if (loading) {
     <div class="loading-message">
       <div class="loading-title">Cargando checkout...</div>
     </div>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="!loading">
+  @if (!loading) {
     <div class="cards-section">
       <p>Tarjetas guardadas:</p>
-      <ng-container *ngIf="cardsResponse.cards.length > 0; else noCards">
-        <div *ngFor="let card of cardsResponse.cards"
-             [class.selected-card]="selectedCard?.fields?.skyflow_id === card.fields.skyflow_id"
-             class="card-item"
-             (click)="handleSelectCard(card)">
-          <div class="card-content">
-            <img *ngIf="card.icon" [src]="card.icon" alt="card" class="card-icon" />
-            <div class="card-info">
-              <div class="cardholder-name">{{ card.fields.cardholder_name }}</div>
-              <div class="card-number">•••• •••• •••• {{ card.fields.card_number.slice(-4) }}</div>
-              <div class="card-expiry">Expira: {{ card.fields.expiration_month }}/{{ card.fields.expiration_year }}</div>
-            </div>
-            <!-- CVV field only needed for cards without a subscription -->
-            <div *ngIf="selectedCard?.fields?.skyflow_id === card.fields.skyflow_id && !card.fields.subscription_id"
-                 class="cvv-section"
-                 (click)="$event.stopPropagation()">
-              <div [id]="'collect_cvv_' + card.fields.skyflow_id" style="overflow: hidden"></div>
+      @if (cardsResponse.cards.length > 0) {
+        @for (card of cardsResponse.cards; track card) {
+          <div
+            [class.selected-card]="selectedCard?.fields?.skyflow_id === card.fields.skyflow_id"
+            class="card-item"
+            (click)="handleSelectCard(card)">
+            <div class="card-content">
+              @if (card.icon) {
+                <img [src]="card.icon" alt="card" class="card-icon" />
+              }
+              <div class="card-info">
+                <div class="cardholder-name">{{ card.fields.cardholder_name }}</div>
+                <div class="card-number">•••• •••• •••• {{ card.fields.card_number.slice(-4) }}</div>
+                <div class="card-expiry">Expira: {{ card.fields.expiration_month }}/{{ card.fields.expiration_year }}</div>
+              </div>
+              <!-- CVV field only needed for cards without a subscription -->
+              @if (selectedCard?.fields?.skyflow_id === card.fields.skyflow_id && !card.fields.subscription_id) {
+                <div
+                  class="cvv-section"
+                  (click)="$event.stopPropagation()">
+                  <div [id]="'collect_cvv_' + card.fields.skyflow_id" style="overflow: hidden"></div>
+                </div>
+              }
             </div>
           </div>
-        </div>
-      </ng-container>
-      <ng-template #noCards>
+        }
+      } @else {
         <div class="no-cards-message">
           <div class="no-cards-title">No hay tarjetas guardadas</div>
           <div class="no-cards-subtitle">Agrega una tarjeta para usar este método</div>
         </div>
-      </ng-template>
+      }
     </div>
-
     <button class="pay-button" (click)="handlePayment()">
       Pagar con tarjeta guardada
     </button>
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  </ng-container>
+    @if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+  }
 </div>
