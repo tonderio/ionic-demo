@@ -1,13 +1,20 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { LiteCheckout } from '@tonder.io/ionic-lite-sdk';
-import { DemoConfig } from '../components/demo-config/demo-config.component';
+import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
+import { CardPreviewComponent } from '../components/card-preview/card-preview.component';
+
 
 @Component({
-  selector: 'app-enrollment-lite-container',
-  templateUrl: './enrollment-lite-container.component.html',
-  styleUrls: ['./enrollment-lite-container.component.scss'],
+    selector: 'app-enrollment-lite-container',
+    templateUrl: './enrollment-lite-container.component.html',
+    styleUrls: ['./enrollment-lite-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [DemoConfigComponent, CardPreviewComponent]
 })
 export class EnrollmentLiteContainerComponent implements OnInit {
+  private ngZone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
+
 
   // ── Demo config (bound to <app-demo-config>) ────────────────────────────────
   config: DemoConfig = {
@@ -38,8 +45,6 @@ export class EnrollmentLiteContainerComponent implements OnInit {
   get baseUrl() {
     return this.config.mode === 'production' ? 'https://app.tonder.io' : 'https://stage.tonder.io';
   }
-
-  constructor(private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   async ngOnInit() {
         console.log('Initializing enroll checkout');

@@ -1,12 +1,23 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { AppModule } from './app/app.module';
+
 import { environment } from './environments/environment';
+import { RouteReuseStrategy } from '@angular/router';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
+import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { AppRoutingModule } from './app/app-routing.module';
+import { AppComponent } from './app/app.component';
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, {
+    providers: [
+        provideZoneChangeDetection(),importProvidersFrom(BrowserModule, AppRoutingModule),
+        provideIonicAngular(),
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    ]
+})
   .catch(err => console.log(err));

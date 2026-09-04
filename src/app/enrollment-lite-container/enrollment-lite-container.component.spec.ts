@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { EnrollmentLiteContainerComponent } from './enrollment-lite-container.component';
 
@@ -9,9 +9,9 @@ describe('EnrollmentLiteContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EnrollmentLiteContainerComponent],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [EnrollmentLiteContainerComponent],
+      providers: [provideIonicAngular()]
+}).compileComponents();
 
     fixture = TestBed.createComponent(EnrollmentLiteContainerComponent);
     component = fixture.componentInstance;

@@ -1,5 +1,5 @@
 <div id="container">
-<iframe class="tds-iframe" allowtransparency="true" id="tdsIframe"></iframe>
+  <iframe class="tds-iframe" allowtransparency="true" id="tdsIframe"></iframe>
   <form [formGroup]="paymentForm">
 
     <div class="lite-container-tonder">
@@ -10,43 +10,45 @@
           <div >Pagar con tarjeta</div>
         </label>
       </div>
-      <div *ngIf="!selectedAPM" class="card-container">
-        <div id="id-name" class="empty-div">
-          <label for="name">Names: </label>
-          <input id="name" type="text" formControlName="name">
-        </div>
-
-        <div id="id-cardNumber" class="empty-div">
-          <label for="cardNumber">Card number: </label>
-          <input id="cardNumber" type="text" formControlName="cardNumber">
-        </div>
-
-        <div class="collect-row">
-          <div class="empty-div">
-            <label for="month">Month: </label>
-            <input id="month" type="text" formControlName="month">
+      @if (!selectedAPM) {
+        <div class="card-container">
+          <div id="id-name" class="empty-div">
+            <label for="name">Names: </label>
+            <input id="name" type="text" formControlName="name">
           </div>
-          <div class="expiration-year">
-            <label for="expirationYear">Year: </label>
-            <input id="expirationYear" type="text" formControlName="expirationYear">
+          <div id="id-cardNumber" class="empty-div">
+            <label for="cardNumber">Card number: </label>
+            <input id="cardNumber" type="text" formControlName="cardNumber">
           </div>
-          <div class="empty-div">
-            <label for="cvv">CVV: </label>
-            <input id="cvv" type="text" formControlName="cvv">
-          </div>
-        </div>
-      </div>
-      <div class="apms-list-container">
-        <div *ngFor="let apm of activeAPMs" class="apm-item">
-          <input type="radio" class="item-selected" name="item-selected" (change)="selectAPM(apm)" id="{{apm.id}}">
-          <label class="apm-item-label" for="{{apm.id}}">
-            <div class="apm-image">
-              <div class="apm-image-border"></div>
-              <img [src]="apm.icon" alt="{{apm.label}}"/>
+          <div class="collect-row">
+            <div class="empty-div">
+              <label for="month">Month: </label>
+              <input id="month" type="text" formControlName="month">
             </div>
-            <div class="apm-name">{{apm.label}}</div>
-          </label>
+            <div class="expiration-year">
+              <label for="expirationYear">Year: </label>
+              <input id="expirationYear" type="text" formControlName="expirationYear">
+            </div>
+            <div class="empty-div">
+              <label for="cvv">CVV: </label>
+              <input id="cvv" type="text" formControlName="cvv">
+            </div>
+          </div>
         </div>
+      }
+      <div class="apms-list-container">
+        @for (apm of activeAPMs; track apm) {
+          <div class="apm-item">
+            <input type="radio" class="item-selected" name="item-selected" (change)="selectAPM(apm)" id="{{apm.id}}">
+            <label class="apm-item-label" for="{{apm.id}}">
+              <div class="apm-image">
+                <div class="apm-image-border"></div>
+                <img [src]="apm.icon" alt="{{apm.label}}"/>
+              </div>
+              <div class="apm-name">{{apm.label}}</div>
+            </label>
+          </div>
+        }
       </div>
       <div class="container-pay-button">
         <button class="lite-pay-button" (click)="onPayment($event)">Pay</button>

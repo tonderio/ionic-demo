@@ -1,18 +1,24 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { InlineCheckout } from "@tonder.io/ionic-full-sdk";
 
 import { Platform } from '@ionic/angular';
 import { IProcessPaymentRequest } from '@tonder.io/ionic-full-sdk/dist/types/commons';
-import { DemoConfig } from '../components/demo-config/demo-config.component';
+import { DemoConfig, DemoConfigComponent } from '../components/demo-config/demo-config.component';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
-  selector: 'app-explore-container',
-  templateUrl: './explore-container.component.html',
-  styleUrls: ['./explore-container.component.scss'],
+    selector: 'app-explore-container',
+    templateUrl: './explore-container.component.html',
+    styleUrls: ['./explore-container.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [DemoConfigComponent, FormsModule]
 })
 
 export class ExploreContainerComponent implements OnInit, OnDestroy {
+  platform = inject(Platform);
+
 
   @Input() name?: string;
 
@@ -40,7 +46,7 @@ export class ExploreContainerComponent implements OnInit, OnDestroy {
     return this.config.mode === 'production' ? 'https://app.tonder.io' : 'https://stage.tonder.io';
   }
 
-  constructor(public platform: Platform) {
+  constructor() {
     this.externalButton = false;
     this.customerData = null;
     this.secureToken = null;

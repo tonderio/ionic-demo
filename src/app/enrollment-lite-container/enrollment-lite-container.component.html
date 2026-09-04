@@ -13,7 +13,7 @@
     </app-card-preview>
 
     <!-- ── Skyflow Collect Fields ── -->
-    <ng-container *ngIf="!cardSaved">
+    @if (!cardSaved) {
       <div style="max-height: 90px; overflow: hidden">
         <div id="collect_enroll_cardholder_name"></div>
       </div>
@@ -31,14 +31,20 @@
           <div id="collect_enroll_cvv"></div>
         </div>
       </div>
-      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+      @if (errorMessage) {
+        <p class="error-message">{{ errorMessage }}</p>
+      }
       <button class="btn-primary" (click)="onSave()" [disabled]="isSaving">
-        <span *ngIf="isSaving" class="btn-spinner"></span>
+        @if (isSaving) {
+          <span class="btn-spinner"></span>
+        }
         {{ isSaving ? 'Guardando...' : 'Guardar tarjeta' }}
       </button>
-    </ng-container>
+    }
 
-    <button *ngIf="cardSaved" class="btn-secondary" (click)="reset()">Regresar</button>
+    @if (cardSaved) {
+      <button class="btn-secondary" (click)="reset()">Regresar</button>
+    }
 
   </div>
 

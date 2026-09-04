@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
 
 export interface DemoConfig {
   mode: 'development' | 'stage' | 'production';
@@ -16,9 +18,11 @@ export interface DemoConfig {
  * Emit (refresh) to trigger re-initialization in the parent.
  */
 @Component({
-  selector: 'app-demo-config',
-  templateUrl: './demo-config.component.html',
-  styleUrls: ['./demo-config.component.scss'],
+    selector: 'app-demo-config',
+    templateUrl: './demo-config.component.html',
+    styleUrls: ['./demo-config.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [FormsModule]
 })
 export class DemoConfigComponent {
   /** Config object shared with the parent component (mutated in-place). */

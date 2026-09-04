@@ -1,19 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideIonicAngular } from '@ionic/angular';
 
-import { ExploreContainerComponent } from './explore-container.component';
+import { EnrollmentContainerComponent } from './enrollment-container.component';
 
-describe('ExploreContainerComponent', () => {
-  let component: ExploreContainerComponent;
-  let fixture: ComponentFixture<ExploreContainerComponent>;
+describe('EnrollmentContainerComponent', () => {
+  let component: EnrollmentContainerComponent;
+  let fixture: ComponentFixture<EnrollmentContainerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExploreContainerComponent],
-      imports: [IonicModule.forRoot()]
+      imports: [
+        RouterTestingModule,
+        EnrollmentContainerComponent
+      ],
+      providers: [provideIonicAngular()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ExploreContainerComponent);
+    fixture = TestBed.createComponent(EnrollmentContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
